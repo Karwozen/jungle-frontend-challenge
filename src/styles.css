@@ -422,3 +422,11 @@ body:has(.auth-dialog[open]) { overflow: hidden; }
   .checkout-title { margin: 0; font-size: 18px; }
   .checkout-disclaimer { margin-top: 16px; }
 }
+.checkout-wallet-options, .checkout-provider-options { min-width: 0; margin: 20px 0; }
+.checkout-wallet-options legend, .checkout-provider-options legend { font-size: 12px; margin-bottom: 8px; }
+.checkout-option { display: flex; align-items: center; gap: 14px; padding: 16px; margin-bottom: 10px; background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; cursor: pointer; font-size: 12px; }
+.checkout-option:has(input:checked) { border-color: var(--color-primary); }
+.checkout-option input { flex: none; accent-color: var(--color-primary); }
+.checkout-option span { min-width: 0; overflow-wrap: anywhere; }
+.checkout-option small { display: block; color: var(--color-muted-foreground); margin-top: 6px; line-height: 1.5; }
+.checkout-option input[type="radio"] { width: 18px; height: 18px; min-width: 18px; padding: 0; margin: 0; }

@@ -75,7 +75,7 @@ A [demo de Obeavis](https://junglegaming-frontend-challenge-eight.vercel.app/) f
 O frame Mobile / Pagamento (16:748) usa fundo #140D0A, largura 414 px,
 espaçamento lateral de 28 px, cabeçalho com retorno e título “Pagamento com
 carteira”. Apresenta carteiras cadastradas e provedores como cartões com seleção.
-A implementação usa cabeçalho e retorno próprios no mobile; os controles de
-carteira e provedor ainda são seletores, e o formulário de perfil e a revisão
-necessários ao enunciado continuam na mesma tela. Essa diferença permanece
-pendente de revisão.
+A implementação usa cabeçalho e retorno próprios no mobile e cartões de
+seleção para carteira e provedor. O formulário de perfil e a revisão necessários
+ao enunciado continuam na mesma tela; a disposição completa ainda precisa de
+comparação visual.

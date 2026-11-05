@@ -44,7 +44,7 @@ test('referência visual do pagamento', async ({ page }) => {
   await expect(page.getByText('Principal · Principal')).toBeVisible()
   await page.goto('/checkout')
   await expect(page.getByRole('heading', { name: 'Carteira e rede' })).toBeVisible()
-  await expect(page.getByLabel('Carteira', { exact: true })).toBeVisible()
+  await expect(page.getByRole('radio', { name: /Principal/ })).toBeVisible()
   await page.evaluate(() => document.fonts.ready)
   await expect(page).toHaveScreenshot('pagamento.png', { animations: 'disabled', fullPage: true })
 })

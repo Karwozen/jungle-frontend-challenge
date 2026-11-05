@@ -121,9 +121,14 @@ test('pedido rejeita rede incompatível e preserva o carrinho', async ({ page })
 
 test('rascunho de pagamento persiste e pedido preserva dados validados', async ({ page }) => {
   await prepare(page)
+  const provider = page.getByRole('radio', { name: 'MetaMask' })
+  await provider.focus()
+  await provider.press('Space')
+  await expect(provider).toBeChecked()
   await page.getByLabel('Observação do colecionador (opcional)').fill('Minha primeira coleção')
   await expect(page.getByRole('button', { name: 'Confirmar pedido' })).toHaveCount(0)
   await page.reload()
+  await expect(page.getByRole('radio', { name: 'MetaMask' })).toBeChecked()
   await expect(page.getByLabel('Nome de usuário', { exact: true })).toHaveValue('alice')
   await expect(page.getByLabel('Observação do colecionador (opcional)')).toHaveValue('Minha primeira coleção')
   await page.evaluate(async () => { await fetch('/api/demo/expire-session', { method: 'POST', headers: { Authorization: 'Bearer ' + localStorage.getItem('kurio.session.token') } }) })
@@ -145,7 +150,7 @@ test('rascunho de pagamento persiste e pedido preserva dados validados', async (
   await page.getByRole('button', { name: 'Confirmar pedido' }).click()
   await expect(page.getByRole('heading', { name: 'Pedido confirmado' })).toBeVisible({ timeout: 10000 })
   const collector = await page.evaluate(() => JSON.parse(localStorage.getItem('kurio.mock.orders.v1')!).orders[0].order.collector)
-  expect(collector).toMatchObject({ username: 'alice', profileName: 'Coleção Alice', note: 'Minha primeira coleção', walletType: 'WalletConnect' })
+  expect(collector).toMatchObject({ username: 'alice', profileName: 'Coleção Alice', note: 'Minha primeira coleção', walletType: 'MetaMask' })
 })
 
 
