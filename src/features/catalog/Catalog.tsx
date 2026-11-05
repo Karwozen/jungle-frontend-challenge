@@ -9,7 +9,7 @@ import { queryClient } from '../../app/query'
 import type { CatalogResponse } from '../../shared/contracts'
 import { catalogSearch, type CatalogSearch } from '../../shared/catalog'
 import { NftCard } from './NftCard'
-import { Artwork } from './Artwork'
+import { FeaturedArtwork } from './FeaturedArtwork'
 import { HomeSections } from './HomeSections'
 import { parseEth } from '../../shared/money'
 
@@ -19,7 +19,6 @@ export function Catalog() {
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [priceError, setPriceError] = useState('')
   const catalog = useQuery({ queryKey: ['nfts', search], queryFn: async ({ signal }) => (await api.get<CatalogResponse>('/nfts', { params: search, signal })).data })
-  const featured = useQuery({ queryKey: ['nfts', 'featured'], queryFn: async ({ signal }) => (await api.get<CatalogResponse>('/nfts', { params: { page: 1 }, signal })).data })
   useEffect(() => {
     const socket = createSocket()
     const reconcile = () => { void queryClient.invalidateQueries({ queryKey: ['nfts'] }) }
@@ -32,7 +31,7 @@ export function Catalog() {
   return <main id="content" className="market-container">
     <section className="hero-copy" aria-labelledby="hero-title">
       <div className="hero-text"><p className="hero-eyebrow">Bem-vindo à KURIO</p><h1 id="hero-title">SEJA DONO DO FUTURO<br/>DA ARTE DIGITAL</h1><p className="hero-description">Descubra NFTs selecionados de criadores emergentes e consagrados. Colecione arte digital rara, apoie artistas e faça parte da cultura do amanhã.</p><Button asChild><a href="#market">Explorar <ArrowRight size={16} aria-hidden="true"/></a></Button></div>
-      <div className="hero-art">{featured.data?.items[0] ? <Artwork nft={featured.data.items[0]} priority large/> : <div className="skeleton aspect-square rounded-xl"/>}</div>
+      <FeaturedArtwork/>
     </section>
     <section id="market" aria-label="Mercado de NFTs" className="market-layout">
       <aside id="catalog-filters" className={`catalog-filters ${filtersOpen ? 'filters-expanded' : ''}`}>

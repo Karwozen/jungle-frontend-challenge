@@ -407,3 +407,9 @@ body:has(.auth-dialog[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .detail-art-frame img { transition: none; } }
 .checkout-wallets, .checkout-collector { margin-top: 24px; }
 .checkout-wallets h2, .checkout-collector h2 { margin-bottom: 16px; }
+
+.hero-featured { position: relative; min-width: 0; }
+.hero-controls { display: flex; justify-content: center; }
+.hero-controls button { display: grid; place-items: center; width: 32px; height: 32px; cursor: pointer; border-radius: 50%; }
+.hero-controls button span { width: 9px; height: 9px; border: 1px solid var(--color-primary); border-radius: 50%; }
+.hero-controls button[aria-pressed="true"] span { background: var(--color-primary); }

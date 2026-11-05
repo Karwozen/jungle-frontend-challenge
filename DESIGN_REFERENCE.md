@@ -64,3 +64,7 @@ mobile. Não reproduzir marcadores ou avatares de comentários como elementos da
 A posição de controles, texto, espaçamento, tipografia e fidelidade das demais
 telas seguem em revisão. Os snapshots Playwright registram a versão implementada,
 sem certificar correspondência integral ao Figma.
+
+## Referência de implementação
+
+A [demo de Obeavis](https://junglegaming-frontend-challenge-eight.vercel.app/) foi consultada como referência para a navegação manual dos destaques e a descoberta do painel de cenários. O Figma original continua definindo a identidade visual. Os destaques usam as artes já exportadas do Figma e código próprio; suas imagens são editoriais, enquanto preço e disponibilidade continuam vindo da API.

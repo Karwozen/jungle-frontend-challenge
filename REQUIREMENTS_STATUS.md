@@ -14,7 +14,7 @@ Este documento distingue implementação de comprovação. Parcial não signific
 | 7. Socket.IO | nft.updated; order.updated autenticado, comparação de versões, consulta REST na reconexão e polling complementar | Eventos antigos e duplicados de NFT, interrupção e reconexão verificados via Socket.IO |
 | 8. Interface e acessibilidade | Assets locais, shimmer, labels e foco básico; catálogo em 390/768/1440 | Fidelidade de todas as telas; assets/fonte provisórios; erros por campo, teclado, foco e zoom |
 | 9. Playwright | Suíte desktop/mobile; compra, recusa, timeout, idempotência e oito referências visuais Windows | Outros sistemas precisam de baselines; demais cenários obrigatórios |
-| 10. Lighthouse | Auditoria automatizada, 12 medições, relatórios HTML/JSON e medianas de notas, LCP/CLS/TBT | Performance mobile medida em 83/84 ainda abaixo de 90; medição anterior à inclusão do cenário de replay; ver audits/lighthouse/RESULTADOS.md |
+| 10. Lighthouse | Auditoria automatizada, 12 medições, relatórios HTML/JSON e medianas de notas, LCP/CLS/TBT | Performance mobile medida em 79/83 no build com os destaques navegáveis, ainda abaixo de 90; ver audits/lighthouse/RESULTADOS.md |
 | 11. Avaliação | Nenhuma nota ou conformidade integral presumida | Auditar cada critério eliminatório na versão final |
 | 12. Entrega | Código, lockfile, assets, mocks locais, README da solução e ARCHITECTURE.md | Deploy público |
 
