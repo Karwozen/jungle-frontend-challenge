@@ -2,7 +2,7 @@
 
 Em 05/11/2026, com build de produção local, mocks habilitados e Chromium do
 Playwright, foram feitas três medições por página e perfil. A tabela apresenta as
-medianas do build com carregamento antecipado dos módulos, em `2026-11-05T22-42-13-168Z/`. Os relatórios completos em HTML e JSON e o ambiente estão nessa pasta.
+medianas do build com carregamento antecipado dos módulos, em `2026-11-05T22-42-13-168Z/`. Os relatórios completos em HTML e JSON e o ambiente estão nessa pasta. Ajustes posteriores no cabeçalho do pagamento não foram auditados novamente.
 
 | Página | Perfil | Performance | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |

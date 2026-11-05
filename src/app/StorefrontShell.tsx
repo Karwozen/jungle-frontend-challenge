@@ -19,7 +19,7 @@ export function StorefrontShell() {
   const logout = useMutation({ mutationFn: () => api.post('/logout'), onSuccess: async () => { localStorage.removeItem(SESSION_TOKEN_KEY); await clearPrivateData(); await navigate({ to: '/', search: homeSearch }) } })
   return <>
     <a href="#content" className="skip-link">Pular para o conteúdo</a>
-    <header className={`storefront-header${location.pathname.startsWith('/nfts/') ? ' is-nft-detail' : ''}`}><div className="header-content">
+    <header className={`storefront-header${location.pathname.startsWith('/nfts/') ? ' is-nft-detail' : ''}${location.pathname === '/checkout' ? ' is-checkout' : ''}`}><div className="header-content">
       <Link to="/" search={homeSearch} className="wordmark" aria-label="KURIO — Início">KURIO</Link>
       <nav aria-label="Principal" className="desktop-nav"><Link to="/" search={homeSearch} activeOptions={{ exact: true }} activeProps={{ className: 'active' }}>Início</Link><Link to="/" search={homeSearch} hash="market">Mercado</Link><span aria-disabled="true">Criadores</span><span aria-disabled="true">Aprenda</span></nav>
       <div className="header-right"><Link to="/cart" className="account-link">Carrinho</Link>{session.data?.user ? <><Link to="/account/profile" className="account-link">Meu perfil</Link><button className="account-link" disabled={logout.isPending} onClick={() => logout.mutate()}>Sair</button></> : <Link to="/login" search={{ returnTo: location.href }} className="account-link">Entrar</Link>}<button className="icon-button mobile-menu-toggle" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(open => !open)}>{menuOpen ? <X size={22}/> : <Menu size={22}/>}</button></div>

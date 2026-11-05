@@ -68,3 +68,14 @@ sem certificar correspondência integral ao Figma.
 ## Referência de implementação
 
 A [demo de Obeavis](https://junglegaming-frontend-challenge-eight.vercel.app/) foi consultada como referência para a navegação manual dos destaques e a descoberta do painel de cenários. O Figma original continua definindo a identidade visual. Os destaques usam as artes já exportadas do Figma e código próprio; suas imagens são editoriais, enquanto preço e disponibilidade continuam vindo da API.
+
+
+## Pagamento mobile
+
+O frame Mobile / Pagamento (16:748) usa fundo #140D0A, largura 414 px,
+espaçamento lateral de 28 px, cabeçalho com retorno e título “Pagamento com
+carteira”. Apresenta carteiras cadastradas e provedores como cartões com seleção.
+A implementação usa cabeçalho e retorno próprios no mobile; os controles de
+carteira e provedor ainda são seletores, e o formulário de perfil e a revisão
+necessários ao enunciado continuam na mesma tela. Essa diferença permanece
+pendente de revisão.
