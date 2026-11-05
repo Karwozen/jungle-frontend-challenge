@@ -2,6 +2,8 @@
 
 ## Implementação desta solução
 
+[Aplicação publicada na Vercel](https://jungle-frontend-challenge-mocha.vercel.app/) · [Estado da entrega](REQUIREMENTS_STATUS.md)
+
 Esta pasta contém a implementação do desafio com React, TypeScript, TanStack
 Router/Query, Axios, Tailwind, componentes shadcn/ui, MSW, Socket.IO e Playwright.
 Com Node.js 24, execute `npm ci` e `npm run dev:mocks`. Para testes, instale o

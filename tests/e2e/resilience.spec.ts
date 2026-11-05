@@ -28,6 +28,21 @@ test('latências configuradas produzem respostas fora de ordem', async ({ page }
   expect(result.names).toEqual(['Emerald Ape #042', 'Sage Nomad #009'])
 })
 
+test('catálogo mantém esqueleto enquanto a API está lenta e exibe os resultados', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByRole('status')).toContainText('NFTs encontrados')
+  await page.evaluate(async () => {
+    await fetch('/api/demo/network-scenario', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'slow', scope: '/api/nfts', method: 'GET', delays: [3000] }),
+    })
+  })
+  await page.reload()
+  await expect(page.getByLabel('Carregando NFTs')).toBeVisible()
+  await expect(page.getByRole('status')).toContainText('NFTs encontrados')
+  await expect(page.getByLabel('Carregando NFTs')).toHaveCount(0)
+})
+
 test('falha de conexão preserva carrinho e permite repetir alteração', async ({ page }) => {
   await page.goto('/nfts/emerald-ape-42')
   await page.getByRole('button', { name: 'Adicionar ao carrinho' }).click()

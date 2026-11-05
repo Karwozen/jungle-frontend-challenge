@@ -1,24 +1,21 @@
 # Acompanhamento do desafio
 
-Referência: README original em https://github.com/junglegaming/frontend-challenge.
-Este documento distingue implementação de comprovação. Parcial não significa aprovado.
+Referência: [enunciado original](https://github.com/junglegaming/frontend-challenge).
+Esta revisão distingue fluxos implementados de evidências ainda pendentes.
 
-| Seção do enunciado | Situação e evidência | Pendências |
+| Seção | Situação e evidência | Pendência |
 | --- | --- | --- |
-| 1. Escopo | Catálogo, conta, carrinho, checkout e pedido simulados | Concluir interações de detalhe e revisão visual |
-| 2. Stack | React/TS, Router/Query, Axios, Tailwind/shadcn, MSW, Socket.IO e Playwright efetivos | Lighthouse executado; repetir no build final |
-| 3. Telas e fluxos | Busca/URL, filtros de preço e rede (Ethereum/Polygon/Solana), carrinho, conta, carteiras, favoritos e compra implementados; galeria do Emerald conforme as quatro camadas do Figma; edições integradas ao estoque e recibo | Revisão de campos do Figma; outras vistas dependem de assets fornecidos |
-| 4. Integração e estado | Consultas por identidade, cancelamento, invalidação, recuperação de pedido e favorito otimista com rollback | Cobertura ampliada de falhas |
-| 5. Contratos REST | Conta, catálogo, carrinho, cotação, pedidos e favoritos tipados | Documentados em API_CONTRACTS.md; validar contratos finais |
-| 6. MSW | Persistência, reset, dois usuários, preço alterado, pagamento recusado e timeout | Painel /demo/scenarios e API de rede implementados; consolidar cobertura final |
-| 7. Socket.IO | nft.updated; order.updated autenticado, comparação de versões, consulta REST na reconexão e polling complementar | Eventos antigos e duplicados de NFT, interrupção e reconexão verificados via Socket.IO |
-| 8. Interface e acessibilidade | Assets locais, shimmer, labels e foco básico; catálogo em 390/768/1440 | Fidelidade de todas as telas; assets/fonte provisórios; erros por campo, teclado, foco e zoom |
-| 9. Playwright | Suíte desktop/mobile; compra, recusa, timeout, idempotência e oito referências visuais Windows | Outros sistemas precisam de baselines; demais cenários obrigatórios |
-| 10. Lighthouse | Auditoria automatizada, 12 medições, relatórios HTML/JSON e medianas de notas, LCP/CLS/TBT | Performance mobile medida em 79/83 no build com os destaques navegáveis, ainda abaixo de 90; ver audits/lighthouse/RESULTADOS.md |
-| 11. Avaliação | Nenhuma nota ou conformidade integral presumida | Auditar cada critério eliminatório na versão final |
-| 12. Entrega | Código, lockfile, assets, mocks locais, README da solução e ARCHITECTURE.md | Deploy público |
+| 1–3. Escopo, stack e fluxos | Catálogo com busca, filtros, ordenação e paginação; detalhe com galeria, edição e favoritos; conta, carteiras, carrinho, checkout e recibo simulados. Stack obrigatória usada nos fluxos. | Conferir a apresentação das telas contra o Figma. |
+| 4–5. Estado e REST | Contratos tipados em [API_CONTRACTS.md](API_CONTRACTS.md). Consultas por identidade, cancelamento, invalidação, favorito otimista com rollback e pedido idempotente. | Conferir o mapa dos contratos antes do envio. |
+| 6–7. Mocks e tempo real | MSW simula rede, sessão, preço, estoque e pagamento. Playwright cobre reconexão, retomada de pedido pendente e descarte de eventos antigos ou duplicados de NFT. | Verificar os cenários mais importantes no endereço público após a última publicação. |
+| 8. Interface e acessibilidade | Artes locais do Figma, foco visível, navegação por teclado e verificações de diálogo. A auditoria recente marcou 100 em acessibilidade nas duas páginas auditadas. | Comparar manualmente as telas com o Figma e revisar foco, erros e zoom; a auditoria de duas páginas não cobre todo o app. |
+| 9. Playwright | 85 execuções passaram e 3 específicas de viewport foram ignoradas na última suíte completa. Oito baselines no Chromium Windows cobrem início, detalhe, carrinho e pagamento. | Baselines visuais de outros sistemas não estão versionadas. |
+| 10. Lighthouse | Três rodadas por página e perfil, build otimizado com mocks ativos e [resultados completos](audits/lighthouse/RESULTADOS.md). | Performance mobile 82 no início e 83 no detalhe, abaixo da meta 90. |
+| 11. Avaliação | Os fluxos críticos exercitam REST e Socket.IO nos mocks; compra confirmada depende de resposta simulada e dados são isolados por usuário. | Revisão final de conformidade; a nota depende dos avaliadores. |
+| 12. Entrega | [Repositório público](https://github.com/Karwozen/jungle-frontend-challenge), [deploy público](https://jungle-frontend-challenge-mocha.vercel.app/), instruções, lockfile, assets, testes e relatórios. | Verificar correspondência entre deploy e commit final e enviar os dois links à Jungle. |
 
-O Figma é a referência obrigatória e a revisão
-visual de todas as telas está em andamento. As baselines registram o estado atual, não aprovação visual.
-Substituições atuais estão em DESIGN_REFERENCE.md. Testes existentes não comprovam
-fidelidade visual integral nem metas de acessibilidade/performance.
+O [Figma](https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1)
+continua sendo a referência visual. A [documentação de design](DESIGN_REFERENCE.md)
+registra os valores conferidos, as substituições e o que ainda precisa de revisão.
+As baselines registram regressões contra a implementação, não aprovação de
+fidelidade ao Figma.

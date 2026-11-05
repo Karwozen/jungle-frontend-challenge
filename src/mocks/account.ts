@@ -27,11 +27,11 @@ async function initialize() {
 function fail(message: string, status: number, code: string, fields?: Record<string, string>) { return HttpResponse.json({ message, code, fields }, { status }) }
 export async function resetAccounts() { localStorage.removeItem(KEY); initialization = undefined; await initialize() }
 export async function resolveCartIdentity(request: Request) {
+  const guest = `guest:${request.headers.get('x-guest-id') || 'anonymous'}`
+  if (!request.headers.has('authorization')) return { owner: guest, guest }
   await initialize()
   const { user } = authenticate(request)
-  if (request.headers.has('authorization') && !user) return null
-  const guest = `guest:${request.headers.get('x-guest-id') || 'anonymous'}`
-  return { owner: user ? `user:${user.id}` : guest, guest }
+  return user ? { owner: `user:${user.id}`, guest } : null
 }
 function authenticate(request: Request) {
   const token = request.headers.get('authorization')?.replace(/^Bearer /, '') ?? ''
@@ -64,8 +64,8 @@ export const accountHandlers = [
     return issue(read(), user)
   }),
   http.get('/api/session', async ({ request }) => {
-    await initialize()
     if (!request.headers.has('authorization')) return HttpResponse.json({ user: null })
+    await initialize()
     const { user, session } = authenticate(request)
     return user ? HttpResponse.json({ user: publicUser(user), expiresAt: session.expiresAt }) : fail('Sua sessão expirou. Entre novamente.', 401, 'SESSION_EXPIRED')
   }),

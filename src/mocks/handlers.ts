@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { resetNetwork } from './network'
-import { http, HttpResponse, ws, delay } from 'msw'
+import { http, HttpResponse, ws } from 'msw'
 import { toSocketIo } from '@mswjs/socket.io-binding'
 import { readDatabase, writeDatabase, resetDatabase } from './database'
 import { serializeEth, parseEth } from '../shared/money'
@@ -55,8 +55,7 @@ export const handlers = [
     const heartbeat = setInterval(() => connection.client.send('2'), 20_000)
     connection.client.addEventListener('close', () => { clearInterval(heartbeat); connections.delete(close); clients.delete(client); nftListeners.delete(emitNft); if (subscription) orderListeners.delete(subscription) })
   }),
-  http.get('/api/nfts', async ({ request }) => {
-    await delay(350)
+  http.get('/api/nfts', ({ request }) => {
     const url = new URL(request.url)
     const params = catalogSearch.parse(Object.fromEntries(url.searchParams))
     const search = params.q.toLocaleLowerCase('pt-BR')

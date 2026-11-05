@@ -74,6 +74,11 @@ catálogo e invalida carrinho. O checkout assina `order.updated` após enviar
 antigo ou versão regressiva. Ao reconectar, consulta REST; pedidos pendentes também
 fazem polling de dois segundos. Listeners e timers são liberados no unmount.
 
+No build de produção, o HTML antecipa o download dos módulos de mocks e de
+rotas. A execução mantém a ordem: o MSW instala o interceptor de WebSocket
+antes da avaliação do cliente Socket.IO. A latência do catálogo é controlada
+pelo cenário de rede, e o estado de carregamento é verificado com esse cenário.
+
 ## Interface e limitações conhecidas
 
 O catálogo e detalhe têm skeletons com shimmer, estados vazios e de erro, labels
@@ -87,14 +92,15 @@ em `REQUIREMENTS_STATUS.md`.
 
 ## Verificação
 
-Em 05/11/2026, build e lint passaram e a suíte Playwright teve 79 testes aprovados
+Em 05/11/2026, build e lint passaram e a suíte Playwright teve 85 testes aprovados
 e três ignorados por layout. A suíte cobre fluxos, falhas de rede e reconexão.
 Relatórios HTML e traces são gerados em `playwright-report` e `test-results`.
-Seis snapshots visuais foram criados no Chromium para Windows; não representam
+Oito snapshots visuais foram criados no Chromium para Windows; não representam
 comparação automática com o Figma. Em outros sistemas, esses testes são ignorados
 até existirem referências próprias. Ver `DEVELOPMENT.md` e `MOCK_SCENARIOS.md`.
 
-O arquivo `vercel.json` configura o fallback de rotas para o `index.html`. O deploy
-público ainda não foi realizado nem verificado; será preciso testar URL pública,
-refresh em rotas internas, MSW e Socket.IO após publicar. O remoto Git local aponta
-ao desafio original e não deve ser usado como destino de publicação da solução.
+O arquivo `vercel.json` configura o fallback de rotas para o `index.html`. A
+[aplicação pública](https://jungle-frontend-challenge-mocha.vercel.app/) é ligada
+ao branch `main` do [repositório de entrega](https://github.com/Karwozen/jungle-frontend-challenge).
+O remoto `origin` continua apontando ao desafio original; a publicação usa
+`entrega`.
