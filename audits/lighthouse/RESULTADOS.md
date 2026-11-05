@@ -2,7 +2,7 @@
 
 Em 05/11/2026, com build de produção local, mocks habilitados e Chromium do
 Playwright, foram feitas três medições por página e perfil. A tabela apresenta as
-medianas do build atual, em `2026-11-05T18-24-58-555Z/`; os relatórios completos
+medianas do commit `3a45fc6`, em `2026-11-05T18-24-58-555Z/`; uma inclusão posterior no mock de testes ainda não foi auditada. Os relatórios completos
 em HTML e JSON e o ambiente estão nessa pasta.
 
 | Página | Perfil | Performance | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |

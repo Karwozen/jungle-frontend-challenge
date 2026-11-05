@@ -20,6 +20,7 @@ const clients = new Set<{ emit(event: string, data: unknown): void }>()
 const connections = new Set<() => void>()
 let connectionCount = 0
 let socketPausedUntil = 0
+let lastNftEvent: ResourceEvent<Nft> | undefined
 export const handlers = [
   http.get('/api/demo/realtime-status', () => HttpResponse.json({ connectedClients: clients.size, connectionCount })),
   http.post('/api/demo/socket-disconnect', async ({ request }) => {
@@ -72,7 +73,7 @@ export const handlers = [
     const nft = readDatabase().nfts.find(nft => nft.id === params.id)
     return nft ? HttpResponse.json(nft) : HttpResponse.json({ code: 'NOT_FOUND', message: 'NFT não encontrado' }, { status: 404 })
   }),
-  http.post('/api/demo/reset', async () => { socketPausedUntil = 0; resetNetwork(); resetDatabase(); resetCarts(); resetOrders(); resetFavorites(); await resetAccounts(); return HttpResponse.json({ ok: true }) }),
+  http.post('/api/demo/reset', async () => { socketPausedUntil = 0; lastNftEvent = undefined; resetNetwork(); resetDatabase(); resetCarts(); resetOrders(); resetFavorites(); await resetAccounts(); return HttpResponse.json({ ok: true }) }),
   http.post('/api/demo/edition-update', async ({ request }) => {
     const input = await request.json() as { nftId: string; editionId: string; price?: string; available?: number }
     const db = readDatabase(), nft = db.nfts.find(item => item.id === input.nftId)
@@ -89,6 +90,13 @@ export const handlers = [
     for (const client of clients) client.emit('nft.updated', event)
     return HttpResponse.json(nft)
   }),
+  http.post('/api/demo/replay-nft-event', async ({ request }) => {
+    const parsed = z.object({ mode: z.enum(['duplicate', 'older']) }).safeParse(await request.json().catch(() => null))
+    if (!parsed.success || !lastNftEvent) return HttpResponse.json({ message: 'Evento indisponível' }, { status: 422 })
+    const event = parsed.data.mode === 'duplicate' ? lastNftEvent : { ...lastNftEvent, eventId: crypto.randomUUID(), version: lastNftEvent.version - 1, data: { ...lastNftEvent.data, version: lastNftEvent.version - 1, price: '0.01' } }
+    for (const client of clients) client.emit('nft.updated', event)
+    return HttpResponse.json({ eventId: event.eventId, version: event.version, connectedClients: clients.size })
+  }),
   http.post('/api/demo/nft-update', () => {
     const db = readDatabase()
     const nft = db.nfts[0]
@@ -98,6 +106,7 @@ export const handlers = [
     nft.version += 1
     writeDatabase(db)
     const event: ResourceEvent<Nft> = { eventId: crypto.randomUUID(), resourceId: nft.id, version: nft.version, data: nft }
+    lastNftEvent = structuredClone(event)
     for (const client of clients) client.emit('nft.updated', event)
     return HttpResponse.json({ eventId: event.eventId, connectedClients: clients.size })
   }),
