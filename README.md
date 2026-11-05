@@ -1,5 +1,21 @@
 # Desafio Frontend — Marketplace de NFTs
 
+## Implementação desta solução
+
+Esta pasta contém a implementação do desafio com React, TypeScript, TanStack
+Router/Query, Axios, Tailwind, componentes shadcn/ui, MSW, Socket.IO e Playwright.
+Com Node.js 24, execute `npm ci` e `npm run dev:mocks`. Para testes, instale o
+Chromium com `npx playwright install chromium` e use `npm run test:e2e`. Os demais
+comandos e limitações estão em `ARCHITECTURE.md` e `DEVELOPMENT.md`. As credenciais fictícias são
+`alice@kurio.test` / `Kurio2026!` e `bruno@kurio.test` / `Kurio2026!`.
+
+Os cenários podem ser selecionados em `/demo/scenarios`; veja `MOCK_SCENARIOS.md`
+para reproduzir falhas e reconexão.
+
+`REQUIREMENTS_STATUS.md` acompanha os critérios e as pendências da entrega. Execute
+`npm run audit:lighthouse` para reproduzir as auditorias; os resultados estão em
+`audits/lighthouse/RESULTADOS.md`. O README abaixo permanece a especificação original.
+
 Implemente o **NFT Marketplace** em React e TypeScript, seguindo o [layout no Figma](https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1).
 
 O desafio avalia fidelidade visual, qualidade das interações, integração com APIs, gerenciamento de estado assíncrono, tempo real, acessibilidade e performance.

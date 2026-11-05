@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.tsbuildinfo
+test-results/
+output/
+design-archive/
+IMAGE_PROMPTS.md
+IMPLEMENTATION_PLAN.md
+audits/lighthouse/2026-11-05T15-29-28-380Z/
+audits/lighthouse/2026-11-05T15-37-19-249Z/
+audits/lighthouse/2026-11-05T15-41-00-502Z/
+.env.local
+.env.*.local
