@@ -21,7 +21,7 @@ export function OrderReceipt({ order }: { order: Order }) {
     {confirmed && <>
       <h2>Detalhes da transação</h2>
       <div className="receipt-table-wrap"><table className="receipt-items"><thead><tr><th scope="col">NFT</th><th scope="col">Qtd.</th><th scope="col">Total</th></tr></thead><tbody>
-        {order.cart.items.map(item => <tr key={item.id}><td><div className="receipt-nft"><div className="checkout-thumbnail"><Artwork nft={item.nft}/></div><div><strong>{item.nft.name}</strong><p>Edição: {item.edition?.name || 'Padrão'}</p><p>{item.nft.price} ETH por unidade</p></div></div></td><td>{item.quantity}</td><td>{serializeEth(parseEth(item.nft.price) * BigInt(item.quantity))} ETH</td></tr>)}
+        {order.cart.items.map(item => <tr key={item.id}><td><div className="receipt-nft"><div className="checkout-thumbnail"><Artwork nft={item.nft}/></div><div><strong>{item.nft.name}</strong><p>Edição: {item.edition?.name || 'Padrão'}</p><p>{item.nft.price} ETH por unidade</p></div></div></td><td><span aria-hidden="true">(x </span>{item.quantity}<span aria-hidden="true">)</span></td><td>{serializeEth(parseEth(item.nft.price) * BigInt(item.quantity))} ETH</td></tr>)}
       </tbody></table></div>
       <dl className="receipt-totals">{[['Subtotal', order.cart.subtotal], ['Desconto', order.cart.discount], ['Taxa de rede', order.cart.networkFee], ['Total', order.cart.total]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value} ETH</dd></div>)}</dl>
       <p className="receipt-order-id">Pedido {order.id}</p>

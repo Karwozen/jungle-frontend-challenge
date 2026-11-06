@@ -151,11 +151,12 @@ function CheckoutForm({ user }: { user: { id: string; name: string; email: strin
             {wallets.data?.map(wallet => (
               <label className="checkout-option" key={wallet.id}>
                 <input type="radio" name="wallet" value={wallet.id} checked={wallet.id === selectedWallet.id} onChange={() => setConnected('')}/>
-                <span><strong>{wallet.label}</strong><small>{wallet.address}<br/>Rede {wallet.network}</small></span>
+                <span><strong>{wallet.label}</strong><small>{wallet.address}<br/>Rede {wallet.network}</small></span><span className="wallet-option-more" aria-hidden="true">⋮</span>
               </label>
             ))}
           </fieldset>
           <WalletProviders draft={draft}/>
+          {mobile && summary && <p className="checkout-mobile-total" data-total={`${summary.total} ETH`} aria-hidden="true">Total:</p>}
           <div className="checkout-connection-actions">
             <Button type="button" variant="outline" onClick={event => {
               const data = new FormData(event.currentTarget.form!)
@@ -215,18 +216,21 @@ function CheckoutForm({ user }: { user: { id: string; name: string; email: strin
               <h2 id="checkout-summary-heading">Seus NFTs</h2>
               {quote.isPending || cart.isPending ? <div className="skeleton h-24" aria-label="Carregando resumo"/> : summary?.items.length ? (
                 <>
+                  <div className="checkout-items-header" aria-hidden="true"><span>NFTs</span><span>Subtotal</span></div>
                   <ul className="checkout-items">
                     {summary.items.map(item => (
                       <li key={item.id}>
                         <div className="checkout-thumbnail"><Artwork nft={item.nft} sizes="56px"/></div>
                         <div><strong>{item.quantity} × {item.nft.name}</strong><p>Edição: {item.edition?.name || 'Padrão'}</p></div>
+                        <span className="checkout-item-qty" aria-hidden="true">(x {item.quantity})</span>
                         <strong className="checkout-item-total">{serializeEth(parseEth(item.nft.price) * BigInt(item.quantity))} ETH</strong>
                       </li>
                     ))}
                   </ul>
+                  <p className="checkout-coupon-hint">Tem um código promocional? <Link to="/cart">Aplique aqui</Link></p>
                   <dl className="nft-facts">
                     {[['Subtotal', summary.subtotal], ['Desconto', summary.discount], ['Taxa de rede', summary.networkFee], ['Total', summary.total]].map(([label, value]) => (
-                      <div key={label} className={label === 'Total' ? 'checkout-total' : undefined}><dt>{label}</dt><dd>{value} ETH</dd></div>
+                      <div key={label} className={label === 'Total' ? 'checkout-total' : label === 'Taxa de rede' ? 'checkout-fee-row' : undefined}><dt>{label}</dt><dd>{value} ETH{label === 'Taxa de rede' && <small className="checkout-fee-note" aria-hidden="true">Taxa estimada</small>}</dd></div>
                     ))}
                   </dl>
                 </>

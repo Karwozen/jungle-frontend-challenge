@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
 import axios from 'axios'
 import { api } from '../../shared/api'
@@ -17,6 +18,7 @@ export function AddToCart({ nft, editionId = 'standard' }: { nft: Nft; editionId
     <div className="purchase-quantity"><label htmlFor="purchase-quantity"><span aria-hidden="true">Qtd.</span><span className="sr-only">Quantidade</span></label><button type="button" aria-label="Diminuir quantidade" disabled={mutation.isPending || !Number.isInteger(quantity) || quantity <= 1} onClick={() => setQuantity(value => value - 1)}>−</button><input id="purchase-quantity" aria-label="Quantidade" type="number" value={Number.isNaN(quantity) ? '' : quantity} min={1} max={nft.available} onChange={e => setQuantity(e.target.valueAsNumber)}/><button type="button" aria-label="Aumentar quantidade" disabled={mutation.isPending || !Number.isInteger(quantity) || quantity >= nft.available} onClick={() => setQuantity(value => value + 1)}>+</button></div>
     <p className="purchase-total" aria-label="Total dos itens">{total} ETH</p>
     <Button aria-label={!nft.available ? "Esgotado" : "Adicionar ao carrinho"} className="purchase-submit" disabled={mutation.isPending || !validQuantity} onClick={() => mutation.mutate()}>{!nft.available ? 'Esgotado' : mutation.isPending ? 'Adicionando…' : 'Comprar NFT'}</Button>
+    <Link to="/cart" className="purchase-cart-shortcut" aria-label="Ver carrinho"><ShoppingCart size={20} aria-hidden="true"/></Link>
     {mutation.isError && <p role="alert" className="field-error">{axios.isAxiosError(mutation.error) ? mutation.error.response?.data.message || 'Falha de conexão. Tente novamente.' : 'Não foi possível adicionar.'}</p>}
   </section>
 }
