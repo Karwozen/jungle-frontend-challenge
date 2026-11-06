@@ -57,9 +57,9 @@ As opções de edição observadas são 1/1, 1/10, 1/50 e Aberta.
 
 ## Comentários e pendências
 
-Comentários de colaboradores sugerem alinhar os grids dos frames 206, 230 e 231,
-usando o 206 como padrão, e acrescentar backdrop ao diálogo de autenticação. A
-ordem de provedores do pagamento mobile começa com WalletConnect, como no frame. Não reproduzir marcadores ou avatares de comentários como elementos da UI.
+Comentários de colaboradores no arquivo do Figma (#50 a #71) foram revisados e aplicados onde aprimoram a consistência visual: padronização do grid dinâmico pelo Frame 206 (#71, #60, #61) com exibição consistente de nome e preço em todos os cards (#69); adoção de `WalletConnect` como primeira opção de provedor no checkout desktop e mobile (#70); omissão de formas soltas sem finalidade (#68, #66) e da miniatura extra sobreposta no hero mobile (#63); preservação do texto integral no hero sem corte na palavra final (#64); alinhamento vertical do menu central do cabeçalho com o logotipo `KURIO` e ações à direita (#59); backdrop preto com 60% de opacidade (`rgba(0, 0, 0, 0.6)`) no diálogo de autenticação (#58); moldura uniforme nos cards sem vazamento vertical do fundo (#56, #55); centralização e respiro nos blocos de destaque lateral, banners promocionais e rodapé (#50 a #54, #57, #65); e distinção visual entre o botão primário `Alterar` e a ação `Remover` no avatar do perfil.
+
+Não reproduzir marcadores ou avatares de comentários como elementos da UI.
 A posição de controles, texto, espaçamento, tipografia e fidelidade das demais
 telas seguem em revisão. Os snapshots Playwright registram a versão implementada,
 sem certificar correspondência integral ao Figma.

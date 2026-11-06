@@ -1,9 +1,9 @@
 /* Measured compositions from the original desktop and mobile Figma frames.
    Specificity keeps these reference rules separate from functional states. */
 body .header-content { height: 46px; min-height: 46px; padding: 0; border-color: #493126; }
-body .wordmark { font-size: 14px; letter-spacing: .08em; }
-body .desktop-nav { gap: 32px; font-size: 14px; }
-body .desktop-nav > a, body .desktop-nav > button { padding: 12px 0; }
+body .wordmark { font-size: 14px; letter-spacing: .08em; align-items: center; }
+body .desktop-nav { gap: 32px; font-size: 14px; height: 100%; align-items: stretch; }
+body .desktop-nav > a, body .desktop-nav > button { display: inline-flex; align-items: center; height: 100%; padding: 0; }
 body .header-login { background: #cd8949; font-size: 14px; }
 body .header-cart { position: relative; }
 body .hero-copy .hero-eyebrow { color: #f5f1eb; }
@@ -33,11 +33,11 @@ body .catalog-views button { font-size: 14px; padding: 10px 0; }
 body .sort-label { gap: 0; color: var(--color-foreground); font-size: 12px; white-space: nowrap; }
 body .sort-label select { font-size: 12px; padding-inline: 0; }
 body .market-home .results-count { margin-block: 2px 18px; }
-body .catalog-feature { margin-top: 24px; padding-top: 24px; gap: 16px; }
+body .catalog-feature { margin-top: 24px; padding: 24px 16px 16px; gap: 12px; border-radius: 12px; align-items: center; text-align: center; }
 body .catalog-feature span { font-size: 22px; font-weight: 700; }
 body .catalog-feature strong { font-size: 20px; }
 body .catalog-feature img { border-radius: 24px; aspect-ratio: .84; object-fit: cover; }
-body .nft-card-image { padding: 18px 4px; border-radius: 0; }
+body .nft-card-image { padding: 10px; border-radius: 18px; }
 body .nft-card-meta { padding-top: 14px; }
 body .edition-count { display: none; }
 body .nft-card-price { justify-content: start; gap: 10px; }
@@ -45,9 +45,9 @@ body .nft-card-price del { color: var(--color-muted-foreground); font-weight: 40
 body .rarity-badge { position: absolute; top: 16px; left: 0; padding: 6px 16px; background: #cd8949; color: #140d0a; font-size: 14px; }
 body .nft-card > .card-favorite { opacity: 0; top: auto; bottom: 68px; right: 20px; }
 body .nft-card:hover > .card-favorite, body .nft-card:focus-within > .card-favorite { opacity: 1; }
-body .home-promos { gap: 0; }
+body .home-promos { gap: 24px; }
 body .home-promos article { grid-template-columns: 48% 52%; }
-body .home-promos article > div { padding: 20px; }
+body .home-promos article > div { padding: 24px 28px; }
 body .home-promos h2 { font-size: 18px; line-height: 1.3; margin-bottom: 14px; }
 body .home-promos p { color: var(--color-muted-foreground); font-size: 12px; line-height: 20px; margin-bottom: 12px; }
 body .home-promos img { border-radius: 15px; height: 250px; }
@@ -60,14 +60,14 @@ body .editorial-grid h3 { font-size: 16px; line-height: 20px; }
 body .editorial-grid p { line-height: 16px; }
 body .editorial-grid article > div > button { display: block; font-size: 12px; color: var(--color-primary); margin-top: 8px; min-height: 28px; }
 body .footer-features { grid-template-columns: 250px 250px 250px minmax(0,1fr); padding: 32px 32px 32px 48px; gap: 16px; background: #241612; }
-body .footer-features article { padding: 0; border-right: 1px solid #cd8949; }
+body .footer-features article { padding: 0 20px 0 0; border-right: 1px solid #cd8949; }
 body .feature-medallion { display: grid; place-items: center; width: 74px; height: 74px; margin-bottom: 14px; border-radius: 50%; background: #cd8949; color: #140d0a; font-size: 24px; font-weight: 700; }
 body .footer-features h2 { font-size: 18px; line-height: 20px; margin-bottom: 12px; font-weight: 700; }
 body .footer-features p { font-size: 14px; line-height: 22px; color: #c7b290; }
 body .footer-newsletter form { display: flex; margin: 16px 0 12px; }
 body .footer-newsletter input { min-width: 0; padding-inline: 12px; border: 0; background: #38200e; border-radius: 6px 0 0 6px; font-size: 14px; }
 body .footer-newsletter button { background: #cd8949; color: #140d0a; padding: 8px 16px; font-size: 18px; font-weight: 700; border-radius: 0 6px 6px 0; }
-body .footer-brand { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); padding: 24px 32px; gap: 24px; background: #38200e; }
+body .footer-brand { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); align-items: center; padding: 24px 32px; gap: 24px; background: #38200e; }
 body .footer-brand p, body .footer-brand span { font-size: 14px; line-height: 22px; }
 body .footer-directory { padding: 32px; gap: 24px; background: #241612; }
 body .footer-directory h2 { font-size: 18px; font-weight: 700; line-height: 24px; margin-bottom: 12px; }
@@ -76,7 +76,7 @@ body .footer-directory nav > a:hover, body .footer-directory nav > button:hover 
 body .footer-socials { display: flex; gap: 8px; }
 body .footer-social { display: grid; place-items: center; width: 32px; height: 32px; color: #cd8949; border: 1px solid; border-radius: 5px; }
 body .footer-wallet-title { margin-top: 28px; }
-body .footer-directory .wallet-chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 8px; border: 1px solid #60402c; border-radius: 6px; background: #38200e; min-height: 28px; font-size: 9px; color: #e89b55; }
+body .footer-directory .wallet-chips { display: flex; flex-wrap: wrap; align-items: center; width: fit-content; gap: 7px; padding: 8px 14px; border: 1px solid #60402c; border-radius: 6px; background: #38200e; min-height: 28px; font-size: 9px; color: #e89b55; }
 body .footer-bottom { justify-content: center; text-align: center; padding-top: 16px; color: #f5f1eb; font-size: 14px; }
 body .demo-launcher { position: fixed; z-index: 15; bottom: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #cd8949; border-radius: 50%; background: #241612; color: #e89b55; }
 body .auxiliary-dialog { margin: auto; padding: 28px; width: min(440px,calc(100% - 40px)); background: #241612; color: #f5f1eb; border: 1px solid #cd8949; border-radius: 8px; }
@@ -88,7 +88,7 @@ body .password-input { position: relative; }
 body .password-input input { padding-right: 44px; }
 body .password-input button { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 40px; height: 100%; color: #b59a70; }
 body .auth-dialog { width: 500px; max-width: calc(100% - 32px); max-height: calc(100dvh - 40px); margin: min(160px, 12vh) auto auto; padding: 0; border: 0; border-bottom: 10px solid #cd8949; border-radius: 0; background: #241612; color: #f5f1eb; overflow-y: auto; }
-body .auth-dialog::backdrop { background: #140d0a66; backdrop-filter: none; }
+body .auth-dialog::backdrop { background: rgba(0, 0, 0, 0.6); backdrop-filter: none; }
 body .auth-dialog > section { position: relative; min-height: 590px; padding: 48px 80px 72px; }
 body .auth-register > section { min-height: 645px; }
 body .auth-dialog .dialog-close { position: absolute; top: 8px; right: 12px; font-size: 24px; line-height: 24px; color: #cd8949; }
@@ -267,7 +267,8 @@ body .checkout-provider-options .provider-medallion { display: none; }
   body .market-home .hero-copy { min-height: 190px; }
   body .market-home .hero-featured { align-self: start; margin-top: 0; }
   body .hero-controls { position: absolute; right: 100%; bottom: -35px; transform: translateX(45%); }
-  body .market-home .nft-card-image { padding: 12px 4px 18px; border-radius: 22px; }
+  body .hero-inset { display: none; }
+  body .market-home .nft-card-image { padding: 8px; border-radius: 18px; }
   body .market-home .nft-card-image img { aspect-ratio: .99; }
   body .nft-card > .card-favorite { top: 8px; right: 8px; bottom: auto; opacity: 1; }
   body .nft-card-price del { font-size: 11px; }
