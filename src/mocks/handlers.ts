@@ -20,6 +20,11 @@ const clients = new Set<{ emit(event: string, data: unknown): void }>()
 const connections = new Set<() => void>()
 let connectionCount = 0
 let socketPausedUntil = 0
+// Editorial selections for the demonstration catalog.
+const catalogSelections = {
+  new: new Set(['emerald-ape-42', 'neon-vessel-52', 'ape-116', 'ape-117', 'ape-118', 'ape-119']),
+  trending: new Set(['sage-nomad-9', 'neon-vessel-52', 'golden-ape-18', 'ape-101', 'ape-102']),
+}
 let lastNftEvent: ResourceEvent<Nft> | undefined
 export const handlers = [
   http.get('/api/demo/realtime-status', () => HttpResponse.json({ connectedClients: clients.size, connectionCount })),
@@ -59,7 +64,8 @@ export const handlers = [
     const url = new URL(request.url)
     const params = catalogSearch.parse(Object.fromEntries(url.searchParams))
     const search = params.q.toLocaleLowerCase('pt-BR')
-    const items = readDatabase().nfts.filter(nft => nft.name.toLocaleLowerCase('pt-BR').includes(search) && (!params.collection || nft.collection === params.collection) && (!params.network || nft.network === params.network) && (!params.minPrice || parseEth(nft.price) >= parseEth(params.minPrice)) && (!params.maxPrice || parseEth(nft.price) <= parseEth(params.maxPrice)))
+    const selection = params.view ? catalogSelections[params.view] : undefined
+    const items = readDatabase().nfts.filter(nft => (!selection || selection.has(nft.id)) && nft.name.toLocaleLowerCase('pt-BR').includes(search) && (!params.collection || nft.collection === params.collection) && (!params.network || nft.network === params.network) && (!params.minPrice || parseEth(nft.price) >= parseEth(params.minPrice)) && (!params.maxPrice || parseEth(nft.price) <= parseEth(params.maxPrice)))
     if (params.sort !== 'recent') items.sort((a, b) => {
       const first = parseEth(a.price), second = parseEth(b.price)
       const comparison = first < second ? -1 : first > second ? 1 : a.id.localeCompare(b.id)

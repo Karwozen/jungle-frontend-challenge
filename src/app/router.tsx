@@ -26,6 +26,15 @@ const profileRoute = createRoute({ getParentRoute: () => rootRoute, path: '/acco
   const session = await queryClient.fetchQuery(sessionQuery)
   if (!session.user) throw redirect({ to: '/login', search: { returnTo: location.href } })
 }, component: lazyRouteComponent(() => import('../features/account/AccountPages'), 'ProfilePage') })
+const favoritesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/account/favorites',
+  beforeLoad: async ({ location }) => {
+    const session = await queryClient.fetchQuery(sessionQuery)
+    if (!session.user) throw redirect({ to: '/login', search: { returnTo: location.href } })
+  },
+  component: lazyRouteComponent(() => import('../features/catalog/FavoriteCollection'), 'FavoriteCollection'),
+})
 const walletsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/account/wallets', beforeLoad: async ({ location }) => {
   const session = await queryClient.fetchQuery(sessionQuery)
   if (!session.user) throw redirect({ to: '/login', search: { returnTo: location.href } })
@@ -33,7 +42,7 @@ const walletsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/acco
 const checkoutGuard = async ({ location }: { location: { href: string } }) => { const session = await queryClient.fetchQuery(sessionQuery); if (!session.user) throw redirect({ to: '/login', search: { returnTo: location.href } }) }
 const checkoutRoute = createRoute({ getParentRoute: () => rootRoute, path: '/checkout', beforeLoad: checkoutGuard, component: lazyRouteComponent(() => import('../features/cart/CheckoutPage'), 'CheckoutPage') })
 const orderRoute = createRoute({ getParentRoute: () => rootRoute, path: '/checkout/orders/$orderId', beforeLoad: checkoutGuard, component: lazyRouteComponent(() => import('../features/cart/CheckoutPage'), 'OrderPage') })
-export const router = createRouter({ parseSearch: raw => { const parsed: Record<string, unknown> = { ...defaultParseSearch(raw) }, params = new URLSearchParams(raw); for (const key of ['minPrice', 'maxPrice']) { const value = params.get(key); if (value !== null) { try { const json: unknown = JSON.parse(value); parsed[key] = typeof json === 'string' ? json : value } catch { parsed[key] = value } } } return parsed }, routeTree: rootRoute.addChildren([indexRoute, detailRoute, foundationRoute, scenarioRoute, loginRoute, registerRoute, profileRoute, walletsRoute, cartRoute, checkoutRoute, orderRoute]) })
+export const router = createRouter({ parseSearch: raw => { const parsed: Record<string, unknown> = { ...defaultParseSearch(raw) }, params = new URLSearchParams(raw); for (const key of ['minPrice', 'maxPrice']) { const value = params.get(key); if (value !== null) { try { const json: unknown = JSON.parse(value); parsed[key] = typeof json === 'string' ? json : value } catch { parsed[key] = value } } } return parsed }, routeTree: rootRoute.addChildren([indexRoute, detailRoute, foundationRoute, scenarioRoute, loginRoute, registerRoute, profileRoute, walletsRoute, favoritesRoute, cartRoute, checkoutRoute, orderRoute]) })
 declare module '@tanstack/react-router' { interface Register { router: typeof router } }
 function Foundation() {
   const [connected, setConnected] = useState(false)

@@ -17,7 +17,7 @@ credenciais fictícias documentadas no README.
 ## Catálogo
 
 `GET /api/nfts` aceita `q`, `collection`, `network`, `minPrice`, `maxPrice`,
-`sort` (`recent`, `price-asc`, `price-desc`) e `page`. Retorna
+`sort` (`recent`, `price-asc`, `price-desc`), `page` e `view` (`new` ou `trending`, para as seleções editoriais do mock). Retorna
 `{ items, total, page, pageSize }`, com nove itens por página. `GET /api/nfts/:id`
 retorna o NFT ou 404. Um NFT inclui identidade, coleção, preço, disponibilidade,
 versão, rede, arte, galeria e lista de edições com preço e estoque próprios.

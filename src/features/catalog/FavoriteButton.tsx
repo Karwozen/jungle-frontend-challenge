@@ -1,20 +1,25 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useIsMutating, useMutation, useQuery } from '@tanstack/react-query'
 import { Heart } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 import axios from 'axios'
 import { api } from '../../shared/api'
 import { queryClient } from '../../app/query'
 import { sessionQuery } from '../account/session'
+import { favoriteQuery } from './favorites'
 import { Button } from '../../components/ui/button'
 
-export function FavoriteButton({ nftId }: { nftId: string }) {
+export function FavoriteButton({ nftId, compact = false }: { nftId: string; compact?: boolean }) {
   const session = useQuery(sessionQuery)
   const userId = session.data?.user?.id
   const navigate = useNavigate()
-  const key = ['private', userId, 'favorites'] as const
-  const favorites = useQuery({ queryKey: key, queryFn: async ({ signal }) => (await api.get<string[]>('/favorites', { signal })).data, enabled: Boolean(userId), retry: false })
+  const options = favoriteQuery(userId)
+  const key = options.queryKey
+  const favorites = useQuery(options)
   const active = Boolean(favorites.data?.includes(nftId))
+  const mutationKey = [...key, 'toggle']
+  const updating = useIsMutating({ mutationKey }) > 0
   const mutation = useMutation({
+    mutationKey,
     mutationFn: async (next: boolean) => (await api.request<string[]>({ url: `/favorites/${encodeURIComponent(nftId)}`, method: next ? 'put' : 'delete' })).data,
     onMutate: async next => {
       await queryClient.cancelQueries({ queryKey: key })
@@ -31,5 +36,5 @@ export function FavoriteButton({ nftId }: { nftId: string }) {
     mutation.mutate(!active)
   }
   const message = mutation.isError && axios.isAxiosError(mutation.error) ? mutation.error.response?.data?.message : ''
-  return <div className="favorite-control"><Button type="button" variant="outline" aria-pressed={active} disabled={mutation.isPending || Boolean(userId && favorites.isPending)} onClick={toggle}><Heart size={17} aria-hidden="true" fill={active ? 'currentColor' : 'none'}/><span className="favorite-label">{active ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}</span></Button>{message && <p role="alert" className="field-error">{message}</p>}</div>
+  return <div className={compact ? 'favorite-control card-favorite' : 'favorite-control'}><Button type="button" variant="outline" aria-pressed={active} disabled={updating || Boolean(userId && favorites.isPending)} onClick={toggle}><Heart size={17} aria-hidden="true" fill={active ? 'currentColor' : 'none'}/><span className="favorite-label">{active ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}</span></Button>{message && <p role="alert" className="field-error">{message}</p>}</div>
 }

@@ -58,9 +58,8 @@ As opções de edição observadas são 1/1, 1/10, 1/50 e Aberta.
 ## Comentários e pendências
 
 Comentários de colaboradores sugerem alinhar os grids dos frames 206, 230 e 231,
-usando o 206 como padrão, e acrescentar backdrop ao diálogo de autenticação. O
-comentário sobre WalletConnect ainda requer comparação com o frame de pagamento
-mobile. Não reproduzir marcadores ou avatares de comentários como elementos da UI.
+usando o 206 como padrão, e acrescentar backdrop ao diálogo de autenticação. A
+ordem de provedores do pagamento mobile começa com WalletConnect, como no frame. Não reproduzir marcadores ou avatares de comentários como elementos da UI.
 A posição de controles, texto, espaçamento, tipografia e fidelidade das demais
 telas seguem em revisão. Os snapshots Playwright registram a versão implementada,
 sem certificar correspondência integral ao Figma.
@@ -76,6 +75,19 @@ O frame Mobile / Pagamento (16:748) usa fundo #140D0A, largura 414 px,
 espaçamento lateral de 28 px, cabeçalho com retorno e título “Pagamento com
 carteira”. Apresenta carteiras cadastradas e provedores como cartões com seleção.
 A implementação usa cabeçalho e retorno próprios no mobile e cartões de
-seleção para carteira e provedor. O formulário de perfil e a revisão necessários
-ao enunciado continuam na mesma tela; a disposição completa ainda precisa de
-comparação visual.
+seleção para carteira e provedor. O perfil do colecionador aparece à esquerda
+do resumo no desktop e depois da carteira no mobile. A rede, os campos
+obrigatórios e a etapa de revisão permanecem disponíveis no fluxo simulado.
+
+
+## Revisão da vitrine e do carrinho
+
+A home mobile (14:5226) tem busca e filtros no topo, destaque arredondado com
+duas artes, abas de catálogo, cards escalonados e navegação inferior. O atalho
+central leva à busca e o coração abre a lista privada de favoritos. As abas
+Novos lançamentos e Em alta usam seleções editoriais nos dados do mock.
+O desktop mantém a busca visível sobre o catálogo, como na demo de referência.
+
+O carrinho usa colunas de preço, edição e total no desktop e cards compactos
+com quantidades no mobile. As recomendações do desktop vêm do catálogo
+simulado. Valores, estoque e conteúdo do carrinho continuam vindo da API.

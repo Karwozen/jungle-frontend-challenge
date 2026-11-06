@@ -17,10 +17,20 @@ test('favoritos exigem conta, persistem e são isolados por usuário', async ({ 
   await expect(page.getByRole('button', { name: 'Remover dos favoritos' })).toBeVisible()
   await page.reload()
   await expect(page.getByRole('button', { name: 'Remover dos favoritos' })).toBeVisible()
-  if (isMobile) await page.getByRole('link', { name: 'Voltar ao mercado' }).click()
+  if (isMobile) {
+    await page.getByRole('link', { name: 'Voltar ao mercado' }).click()
+    await page.getByRole('navigation', { name: 'Navegação do marketplace' }).getByRole('link', { name: 'Favoritos' }).click()
+  } else {
+    await page.goto('/account/favorites')
+  }
+  await expect(page).toHaveURL(/account\/favorites/)
+  await expect(page.getByRole('heading', { name: 'Emerald Ape #042' })).toBeVisible()
   await page.getByRole('button', { name: 'Sair', exact: true }).click()
   await expect(page).toHaveURL(/\/?(?:\?.*)?$/)
   await login(page, 'bruno@kurio.test')
+  await page.goto('/account/favorites')
+  await expect(page.getByText('Você ainda não adicionou NFTs aos favoritos.')).toBeVisible()
+  await page.goto('/nfts/emerald-ape-42')
   await expect(page.getByRole('button', { name: 'Adicionar aos favoritos' })).toBeVisible()
   await page.getByRole('button', { name: 'Adicionar aos favoritos' }).click()
   await expect(page.getByRole('button', { name: 'Remover dos favoritos' })).toBeVisible()

@@ -20,11 +20,12 @@ test('referência visual do detalhe de NFT', async ({ page }) => {
   await expect(page).toHaveScreenshot('detalhe.png', { animations: 'disabled' })
 })
 
-test('referência visual do carrinho', async ({ page }) => {
+test('referência visual do carrinho', async ({ page, isMobile }) => {
   await page.goto('/nfts/emerald-ape-42')
   await page.getByRole('button', { name: 'Adicionar ao carrinho' }).click()
   await expect(page.getByRole('heading', { name: 'Carrinho de NFTs' })).toBeVisible()
   await expect(page.getByText('1.255 ETH', { exact: true })).toBeVisible()
+  if (!isMobile) await expect(page.getByRole('heading', { name: 'Colecionadores também viram' })).toBeVisible()
   const image = page.locator('.cart-thumbnail img')
   await expect.poll(() => image.evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true)
   await page.evaluate(() => document.fonts.ready)
@@ -42,7 +43,10 @@ test('referência visual do pagamento', async ({ page }) => {
   await page.getByLabel('Endereço da carteira').fill('0x1111111111111111111111111111111111111111')
   await page.getByRole('button', { name: 'Salvar carteira' }).click()
   await expect(page.getByText('Principal · Principal')).toBeVisible()
-  await page.goto('/checkout')
+  await page.goto('/nfts/emerald-ape-42')
+  await page.getByRole('button', { name: 'Adicionar ao carrinho' }).click()
+  await page.getByRole('link', { name: 'Continuar para pagamento' }).click()
+  await expect(page.getByText('1 × Emerald Ape #042')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Carteira e rede' })).toBeVisible()
   await expect(page.getByRole('radio', { name: /Principal/ })).toBeVisible()
   await page.evaluate(() => document.fonts.ready)
