@@ -14,11 +14,13 @@ body .collection-filter-links { display: grid; gap: 0; margin: 0; }
 body .collection-filter-links button { min-height: 40px; padding: 10px 12px; font-size: 14px; line-height: 20px; }
 body .price-filter { margin-top: 32px; padding: 0; border: 0; gap: 10px; }
 body .price-filter h3, body .network-filter h3 { font-size: 18px; font-weight: 600; }
-body .price-sliders { position: relative; height: 28px; margin-inline: 12px; }
-body .price-sliders::before { content: ""; position: absolute; inset: 12px 0; background: #cd8949; height: 3px; }
-body .price-sliders input { position: absolute; inset: 0; appearance: none; pointer-events: none; padding: 0; border: 0; min-height: 28px; width: 100%; background: transparent; }
-body .price-sliders input::-webkit-slider-thumb { appearance: none; pointer-events: auto; width: 12px; height: 12px; border-radius: 50%; background: #cd8949; cursor: grab; }
-body .price-sliders input::-moz-range-thumb { pointer-events: auto; width: 12px; height: 12px; border: 0; border-radius: 50%; background: #cd8949; cursor: grab; }
+body .price-sliders { position: relative; height: 32px; margin-inline: 12px; }
+body .price-sliders::before { content: ""; position: absolute; inset: 14px 0; background: #cd8949; height: 4px; border-radius: 2px; }
+body .price-sliders input { position: absolute; inset: 0; appearance: none; pointer-events: none; padding: 0; border: 0; min-height: 32px; width: 100%; background: transparent; }
+body .price-sliders input::-webkit-slider-thumb { appearance: none; pointer-events: auto; width: 20px; height: 20px; border-radius: 50%; background: #e89b55; border: 2px solid #140d0a; box-shadow: 0 0 0 1px #cd8949; cursor: grab; transition: transform .15s ease, background-color .15s ease; }
+body .price-sliders input::-webkit-slider-thumb:hover, body .price-sliders input:focus-visible::-webkit-slider-thumb { transform: scale(1.12); background: #f2ab66; }
+body .price-sliders input::-moz-range-thumb { pointer-events: auto; width: 20px; height: 20px; border: 2px solid #140d0a; box-shadow: 0 0 0 1px #cd8949; border-radius: 50%; background: #e89b55; cursor: grab; transition: transform .15s ease, background-color .15s ease; }
+body .price-sliders input::-moz-range-thumb:hover, body .price-sliders input:focus-visible::-moz-range-thumb { transform: scale(1.12); background: #f2ab66; }
 body .price-sliders input::-moz-range-track { background: transparent; }
 body .price-values { display: flex; align-items: center; gap: 4px; padding-inline: 12px; font-size: 12px; }
 body .price-values input { width: 52px; min-width: 0; min-height: 26px; padding: 2px; border: 0; border-radius: 0; background: transparent; font-size: 12px; }
@@ -30,8 +32,11 @@ body .advanced-filters label { display: block; margin: 10px 0 4px; }
 body .catalog-toolbar { border: 0; gap: 0; align-items: center; }
 body .catalog-views { flex-wrap: nowrap; gap: 20px; }
 body .catalog-views button { font-size: 14px; padding: 10px 0; }
-body .sort-label { gap: 0; color: var(--color-foreground); font-size: 12px; white-space: nowrap; }
-body .sort-label select { font-size: 12px; padding-inline: 0; }
+body .sort-label { gap: 8px; color: var(--color-foreground); font-size: 12px; white-space: nowrap; }
+body .sort-label select { font-size: 12px; padding: 6px 26px 6px 8px; max-width: none; }
+body .catalog-filters .sort-label { display: grid; gap: 6px; margin-top: 14px; font-size: 11px; color: var(--color-muted-foreground); }
+body .catalog-filters .sort-label select { width: 100%; max-width: none; min-height: 44px; padding: 10px 12px; font-size: 12px; border: 1px solid #493126; border-radius: 3px; background-color: var(--color-background); color: var(--color-foreground); }
+body .catalog-filters > button { margin-top: 14px; }
 body .market-home .results-count { margin-block: 2px 18px; }
 body .catalog-feature { margin-top: 24px; padding: 24px 16px 16px; gap: 12px; border-radius: 12px; align-items: center; text-align: center; }
 body .catalog-feature span { font-size: 22px; font-weight: 700; }
@@ -42,8 +47,10 @@ body .nft-card-meta { padding-top: 14px; }
 body .edition-count { display: none; }
 body .nft-card-price { justify-content: start; gap: 10px; }
 body .nft-card-price del { color: var(--color-muted-foreground); font-weight: 400; font-size: 16px; }
-body .rarity-badge { position: absolute; top: 16px; left: 0; padding: 6px 16px; background: #cd8949; color: #140d0a; font-size: 14px; }
-body .nft-card > .card-favorite { opacity: 0; top: auto; bottom: 68px; right: 20px; }
+body .rarity-badge { position: absolute; top: 20px; left: 10px; padding: 6px 16px; background: #cd8949; color: #140d0a; font-size: 14px; border-radius: 0 6px 6px 0; }
+body .sold-out-badge { top: 20px; left: 10px; border-radius: 0 6px 6px 0; }
+body .artwork-open { right: 18px; bottom: 18px; }
+body .nft-card > .card-favorite { opacity: 0; top: 18px; right: 18px; bottom: auto; }
 body .nft-card:hover > .card-favorite, body .nft-card:focus-within > .card-favorite { opacity: 1; }
 body .home-promos { gap: 24px; }
 body .home-promos article { grid-template-columns: 48% 52%; }
@@ -59,14 +66,19 @@ body .editorial-grid .editorial-date { margin: 0 0 12px; font-size: 10px; }
 body .editorial-grid h3 { font-size: 16px; line-height: 20px; }
 body .editorial-grid p { line-height: 16px; }
 body .editorial-grid article > div > button { display: block; font-size: 12px; color: var(--color-primary); margin-top: 8px; min-height: 28px; }
-body .footer-features { grid-template-columns: 250px 250px 250px minmax(0,1fr); padding: 32px 32px 32px 48px; gap: 16px; background: #241612; }
+body .footer-features { grid-template-columns: repeat(3,minmax(254px,1fr)) minmax(270px,1.12fr); padding: 32px; gap: 20px; background: #241612; }
 body .footer-features article { padding: 0 20px 0 0; border-right: 1px solid #cd8949; }
 body .feature-medallion { display: grid; place-items: center; width: 74px; height: 74px; margin-bottom: 14px; border-radius: 50%; background: #cd8949; color: #140d0a; font-size: 24px; font-weight: 700; }
-body .footer-features h2 { font-size: 18px; line-height: 20px; margin-bottom: 12px; font-weight: 700; }
+body .footer-features h2 { font-size: 17px; line-height: 22px; margin-bottom: 12px; font-weight: 700; }
+body .footer-features article > h2 { white-space: nowrap; }
 body .footer-features p { font-size: 14px; line-height: 22px; color: #c7b290; }
-body .footer-newsletter form { display: flex; margin: 16px 0 12px; }
-body .footer-newsletter input { min-width: 0; padding-inline: 12px; border: 0; background: #38200e; border-radius: 6px 0 0 6px; font-size: 14px; }
-body .footer-newsletter button { background: #cd8949; color: #140d0a; padding: 8px 16px; font-size: 18px; font-weight: 700; border-radius: 0 6px 6px 0; }
+body .footer-newsletter form { display: flex; align-items: stretch; margin: 16px 0 12px; background: #38200e; border: 1px solid #60402c; border-radius: 6px; overflow: hidden; transition: border-color .2s ease, box-shadow .2s ease; }
+body .footer-newsletter form:hover { border-color: #cd8949; }
+body .footer-newsletter form:focus-within { border-color: #e89b55; box-shadow: 0 0 0 2px #e89b5540; }
+body .footer-newsletter input { flex: 1; min-width: 0; padding-inline: 12px; border: 0; border-radius: 0; background: transparent; font-size: 14px; outline: none; box-shadow: none; }
+body .footer-newsletter input:hover, body .footer-newsletter input:focus, body .footer-newsletter input:focus-visible { border: 0; outline: none; box-shadow: none; }
+body .footer-newsletter button { flex: none; background: #cd8949; color: #140d0a; padding: 8px 16px; font-size: 18px; font-weight: 700; border: 0; border-radius: 0; outline: none; transition: background-color .15s ease; }
+body .footer-newsletter button:hover, body .footer-newsletter button:focus-visible { background: #e89b55; outline: none; }
 body .footer-brand { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); align-items: center; padding: 24px 32px; gap: 24px; background: #38200e; }
 body .footer-brand p, body .footer-brand span { font-size: 14px; line-height: 22px; }
 body .footer-directory { padding: 32px; gap: 24px; background: #241612; }
@@ -195,7 +207,7 @@ body .checkout-collector .collector-note { grid-area: 7 / 1 / auto / 3; }
 body .checkout-provider-options .provider-medallion { display: none; }
 @media (max-width: 1250px) and (min-width: 701px) {
   body .footer-features { grid-template-columns: repeat(4,minmax(0,1fr)); padding: 24px; }
-  body .footer-features h2 { font-size: 15px; }
+  body .footer-features h2 { font-size: 15px; white-space: normal; }
   body .footer-features p { font-size: 12px; }
   body .nft-detail-layout { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; }
   body .nft-detail-layout .nft-actions, body .nft-detail-layout .add-to-cart { flex-wrap: wrap; }
@@ -268,13 +280,17 @@ body .checkout-provider-options .provider-medallion { display: none; }
   body .market-home .hero-featured { align-self: start; margin-top: 0; }
   body .hero-controls { position: absolute; right: 100%; bottom: -35px; transform: translateX(45%); }
   body .hero-inset { display: none; }
+  body .market-home .nft-grid { align-items: start; row-gap: 24px; }
+  body .market-home .nft-grid .nft-card:nth-child(even) { transform: none; }
   body .market-home .nft-card-image { padding: 8px; border-radius: 18px; }
   body .market-home .nft-card-image img { aspect-ratio: .99; }
-  body .nft-card > .card-favorite { top: 8px; right: 8px; bottom: auto; opacity: 1; }
+  body .nft-card > .card-favorite { top: 14px; right: 14px; bottom: auto; opacity: 1; }
+  body .artwork-open { right: 14px; bottom: 14px; }
+  body .rarity-badge, body .sold-out-badge { top: 16px; left: 8px; }
   body .nft-card-price del { font-size: 11px; }
   body .footer-features { grid-template-columns: 1fr; padding: 24px; }
   body .footer-features article { padding-bottom: 20px; border-right: 0; border-bottom: 1px solid #493126; }
-  body .footer-features h2 { font-size: 16px; }
+  body .footer-features h2, body .footer-features article > h2 { font-size: 16px; white-space: normal; }
   body .footer-features p { font-size: 12px; }
   body .footer-brand { padding: 24px; gap: 20px; grid-template-columns: 1fr; }
   body .footer-directory { padding: 24px; gap: 24px; grid-template-columns: 1fr; }
@@ -293,6 +309,7 @@ body .account-content input.sr-only { width: 1px; height: 1px; min-height: 0; pa
 body .ens-field input { min-width: 0; }
 body .account-content button[data-variant=ghost] { background: transparent; color: #e89b55; }
 body .account-sidebar a[aria-current=page] { border-left-width: 6px; }
+body .cart-summary > .field-error { margin: 10px 0 4px; padding: 8px 12px; border-radius: 6px; background: #351a14; border: 1px solid #8a3c2c; color: #ff9d80; font-size: 12px; }
 
 body .order-page { padding-top: 166px; min-height: 100vh; }
 body .order-receipt { position: relative; padding: 40px 32px 32px; border-bottom: 10px solid #cd8949; }

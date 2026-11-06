@@ -14,7 +14,7 @@ import { FeaturedArtwork } from './FeaturedArtwork'
 import { HomeSections } from './HomeSections'
 import { useMobileLayout } from '../../shared/useMobileLayout'
 import { PriceFilter } from './PriceFilter'
-const categories = ['Arte digital', 'Fotografia', 'Música', 'Arte 3D', 'Colecionáveis', 'Generativa', 'Jogos', 'Assinaturas', 'Utilidade']
+const categories = ['Arte 3D', 'Arte digital', 'Assinaturas', 'Colecionáveis', 'Fotografia', 'Generativa', 'Jogos', 'Música', 'Utilidade']
 
 const catalogViews = [
   { value: undefined, label: 'Todos os NFTs' },

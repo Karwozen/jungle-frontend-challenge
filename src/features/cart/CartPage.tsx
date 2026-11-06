@@ -103,11 +103,12 @@ export function CartPage() {
             }}>
               <label htmlFor="coupon">Cupom promocional</label>
               <div className="cart-coupon-fields">
-                <input id="coupon" name="coupon" placeholder="Digite o código…"/>
+                <input id="coupon" name="coupon" placeholder="Digite o código…" onChange={() => { if (mutation.isError) mutation.reset() }}/>
                 <Button disabled={mutation.isPending} aria-label="Aplicar cupom">Aplicar</Button>
               </div>
             </form>
             {cart.data.coupon && <Button variant="ghost" onClick={() => mutation.mutate({ url: '/cart-coupon', method: 'delete' })}>Remover cupom {cart.data.coupon}</Button>}
+            {mutation.isError && <p role="alert" className="field-error">{axios.isAxiosError(mutation.error) ? mutation.error.response?.data.message || 'Falha de conexão. Tente novamente.' : 'Não foi possível atualizar.'}</p>}
             <dl className="nft-facts">
               {[['Subtotal', cart.data.subtotal], ['Desconto', cart.data.discount], ['Taxa de rede', cart.data.networkFee], ['Total', cart.data.total]].map(([label, value]) => (
                 <div key={label} className={label === 'Total' ? 'cart-grand-total' : undefined}><dt>{label}</dt><dd>{value} ETH</dd></div>
@@ -124,7 +125,7 @@ export function CartPage() {
           <ul className="nft-grid">{recommended.map(nft => <NftCard key={nft.id} nft={nft}/>)}</ul>
         </section>
       )}
-      {mutation.isError && <p role="alert" className="field-error">{axios.isAxiosError(mutation.error) ? mutation.error.response?.data.message || 'Falha de conexão. Tente novamente.' : 'Não foi possível atualizar.'}</p>}
+      {!cart.data?.items.length && mutation.isError && <p role="alert" className="field-error">{axios.isAxiosError(mutation.error) ? mutation.error.response?.data.message || 'Falha de conexão. Tente novamente.' : 'Não foi possível atualizar.'}</p>}
     </main>
   )
 }
