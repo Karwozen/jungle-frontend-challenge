@@ -1,14 +1,30 @@
-node_modules/
-dist/
-*.tsbuildinfo
-test-results/
-output/
-design-archive/
-IMAGE_PROMPTS.md
-IMPLEMENTATION_PLAN.md
-audits/lighthouse/2026-11-05T15-29-28-380Z/
-audits/lighthouse/2026-11-05T15-37-19-249Z/
-audits/lighthouse/2026-11-05T15-41-00-502Z/
-.env.local
-.env.*.local
-audits/lighthouse/2026-11-05T20-46-19-353Z/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TanStack Router temp files
+.tanstack
+
+# Playwright
+e2e/.results

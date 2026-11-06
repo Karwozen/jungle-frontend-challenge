@@ -1,0 +1,229 @@
+{
+  "environment": {
+    "date": "2026-10-23T08:12:56.963Z",
+    "lighthouse": "12.8.2",
+    "chrome": "Chrome/141.0.0.0",
+    "node": "v20.19.4",
+    "os": "Windows_NT 10.0.26300 (x64)",
+    "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz × 16",
+    "memoryGb": 16,
+    "app": "kurio-marketplace@1.0.0 (build de produção, vite preview, mocks ligados)",
+    "runs": 3
+  },
+  "targets": {
+    "performance": 90,
+    "accessibility": 95,
+    "best-practices": 95,
+    "seo": 90
+  },
+  "results": [
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "scores": {
+        "performance": 84,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 92
+      },
+      "lcp": 3834.755,
+      "cls": 0.016131933246018155,
+      "tbt": 74.5,
+      "fcp": 2640.8949999999995,
+      "runs": [
+        {
+          "scores": {
+            "performance": 84,
+            "accessibility": 96,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 3834.755,
+          "cls": 0.016131933246018155,
+          "tbt": 94.5,
+          "fcp": 2651.4625
+        },
+        {
+          "scores": {
+            "performance": 84,
+            "accessibility": 96,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 3818.474,
+          "cls": 0.016131933246018155,
+          "tbt": 67,
+          "fcp": 2640.8949999999995
+        },
+        {
+          "scores": {
+            "performance": 84,
+            "accessibility": 96,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 3891.865,
+          "cls": 0.016131933246018155,
+          "tbt": 74.5,
+          "fcp": 2638.8875
+        }
+      ]
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "scores": {
+        "performance": 86,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 92
+      },
+      "lcp": 3590.9105,
+      "cls": 0.0012879831655141932,
+      "tbt": 25.5,
+      "fcp": 2788.75875,
+      "runs": [
+        {
+          "scores": {
+            "performance": 86,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 3590.9105,
+          "cls": 0.0012879831655141932,
+          "tbt": 25.5,
+          "fcp": 2788.75875
+        },
+        {
+          "scores": {
+            "performance": 86,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 3586.7845000000007,
+          "cls": 0.0012879831655141932,
+          "tbt": 19.5,
+          "fcp": 2787.6537500000004
+        },
+        {
+          "scores": {
+            "performance": 86,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 3600.9160000000006,
+          "cls": 0.0012879831655141932,
+          "tbt": 29,
+          "fcp": 2794.4300000000003
+        }
+      ]
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "scores": {
+        "performance": 99,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 92
+      },
+      "lcp": 867.6455,
+      "cls": 0,
+      "tbt": 0,
+      "fcp": 654.7787500000001,
+      "runs": [
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 96,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 878.9345000000001,
+          "cls": 0,
+          "tbt": 0,
+          "fcp": 654.7787500000001
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 96,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 838.1605,
+          "cls": 0,
+          "tbt": 0,
+          "fcp": 678.13375
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 96,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 867.6455,
+          "cls": 0,
+          "tbt": 0,
+          "fcp": 645.3712499999999
+        }
+      ]
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 92
+      },
+      "lcp": 880.159,
+      "cls": 0.017462107340722493,
+      "tbt": 0,
+      "fcp": 719.1324999999999,
+      "runs": [
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 880.159,
+          "cls": 0.017462107340722493,
+          "tbt": 0,
+          "fcp": 719.1324999999999
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 880.9989999999999,
+          "cls": 0.017462107340722493,
+          "tbt": 0,
+          "fcp": 719.8325
+        },
+        {
+          "scores": {
+            "performance": 99,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 92
+          },
+          "lcp": 873.735,
+          "cls": 0.017462107340722493,
+          "tbt": 0,
+          "fcp": 714.1125
+        }
+      ]
+    }
+  ]
+}
