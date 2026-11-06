@@ -73,7 +73,7 @@ test('revisão da página inicial com assets originais', async ({ page }, testIn
 
 test('diálogo de autenticação contém foco e fecha pelo teclado', async ({ page }, testInfo) => {
   await page.goto('/login')
-  const dialog = page.getByRole('dialog', { name: 'Bem-vindo de volta' })
+  const dialog = page.getByRole('dialog', { name: 'Entrar', exact: true })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByLabel('E-mail', { exact: true })).toBeFocused()
   for (let step = 0; step < 12; step++) {

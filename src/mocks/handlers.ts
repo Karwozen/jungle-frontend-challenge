@@ -65,14 +65,17 @@ export const handlers = [
     const params = catalogSearch.parse(Object.fromEntries(url.searchParams))
     const search = params.q.toLocaleLowerCase('pt-BR')
     const selection = params.view ? catalogSelections[params.view] : undefined
-    const items = readDatabase().nfts.filter(nft => (!selection || selection.has(nft.id)) && nft.name.toLocaleLowerCase('pt-BR').includes(search) && (!params.collection || nft.collection === params.collection) && (!params.network || nft.network === params.network) && (!params.minPrice || parseEth(nft.price) >= parseEth(params.minPrice)) && (!params.maxPrice || parseEth(nft.price) <= parseEth(params.maxPrice)))
+    const all = readDatabase().nfts
+    const facets = { categories: {} as Record<string, number>, networks: {} as Record<string, number> }
+    for (const nft of all) { facets.categories[nft.category || 'Arte digital'] = (facets.categories[nft.category || 'Arte digital'] || 0) + 1; facets.networks[nft.network] = (facets.networks[nft.network] || 0) + 1 }
+    const items = all.filter(nft => (!selection || selection.has(nft.id)) && nft.name.toLocaleLowerCase('pt-BR').includes(search) && (!params.category || nft.category === params.category) && (!params.collection || nft.collection === params.collection) && (!params.network || nft.network === params.network) && (!params.minPrice || parseEth(nft.price) >= parseEth(params.minPrice)) && (!params.maxPrice || parseEth(nft.price) <= parseEth(params.maxPrice)))
     if (params.sort !== 'recent') items.sort((a, b) => {
       const first = parseEth(a.price), second = parseEth(b.price)
       const comparison = first < second ? -1 : first > second ? 1 : a.id.localeCompare(b.id)
       return params.sort === 'price-desc' ? -comparison : comparison
     })
     const pageSize = 9
-    return HttpResponse.json({ items: items.slice((params.page - 1) * pageSize, params.page * pageSize), total: items.length, page: params.page, pageSize })
+    return HttpResponse.json({ items: items.slice((params.page - 1) * pageSize, params.page * pageSize), total: items.length, page: params.page, pageSize, facets })
   }),
   http.get('/api/nfts/:id', ({ params }) => {
     const nft = readDatabase().nfts.find(nft => nft.id === params.id)

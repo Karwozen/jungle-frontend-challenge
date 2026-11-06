@@ -1,9 +1,11 @@
 import { Link, Outlet, useNavigate, useLocation } from '@tanstack/react-router'
-import { ArrowUpRight, Heart, House, LogIn, Menu, Search, ShoppingCart, UserRound, X, ShieldCheck, Palette, Sparkles } from 'lucide-react'
+import { Heart, House, LogIn, Menu, Search, ShoppingCart, UserRound, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { api, SESSION_TOKEN_KEY } from '../shared/api'
 import { clearPrivateData, sessionQuery } from '../features/account/session'
+import { StorefrontFooter } from './StorefrontFooter'
+import { AuxiliaryAction } from '../components/AuxiliaryAction'
 const homeSearch = { q: '', collection: '', page: 1, sort: 'recent' as const }
 
 export function StorefrontShell() {
@@ -21,12 +23,12 @@ export function StorefrontShell() {
   const logout = useMutation({ mutationFn: () => api.post('/logout'), onSuccess: async () => { localStorage.removeItem(SESSION_TOKEN_KEY); await clearPrivateData(); await navigate({ to: '/', search: homeSearch }) } })
   return <>
     <a href="#content" className="skip-link">Pular para o conteúdo</a>
-    <header className={`storefront-header${isHome ? ' is-home' : ''}${location.pathname === '/cart' ? ' is-cart' : ''}${location.pathname.startsWith('/nfts/') ? ' is-nft-detail' : ''}${location.pathname === '/checkout' ? ' is-checkout' : ''}`}><div className="header-content">
+    {!location.pathname.startsWith('/checkout/orders/') && <header className={`storefront-header${isHome ? ' is-home' : ''}${location.pathname === '/login' || location.pathname === '/register' ? ' is-auth' : ''}${location.pathname === '/cart' ? ' is-cart' : ''}${location.pathname.startsWith('/nfts/') ? ' is-nft-detail' : ''}${location.pathname === '/checkout' ? ' is-checkout' : ''}`}><div className="header-content">
       <Link to="/" search={homeSearch} className="wordmark" aria-label="KURIO — Início">KURIO</Link>
-      <nav aria-label="Principal" className="desktop-nav"><Link to="/" search={homeSearch} className={isHome && !isMarket ? 'nav-selected' : undefined}>Início</Link><Link to="/" search={homeSearch} hash="market" className={isMarket ? 'nav-selected' : undefined}>Mercado</Link><span aria-disabled="true">Criadores</span><span aria-disabled="true">Aprenda</span></nav>
+      <nav aria-label="Principal" className="desktop-nav"><Link to="/" search={homeSearch} className={isHome && !isMarket ? 'nav-selected' : undefined}>Início</Link><Link to="/" search={homeSearch} hash="market" className={isMarket ? 'nav-selected' : undefined}>Mercado</Link><AuxiliaryAction>Criadores</AuxiliaryAction><AuxiliaryAction>Aprenda</AuxiliaryAction></nav>
       <div className="header-right"><Link to="/" search={homeSearch} hash="market-search" className="header-search" aria-label="Buscar no catálogo"><Search size={18} aria-hidden="true"/></Link>
-      <Link to="/cart" className="account-link header-cart" aria-label="Carrinho"><ShoppingCart size={18} aria-hidden="true"/></Link>{session.data?.user ? <><Link to="/account/profile" className="account-link">Meu perfil</Link><button className="account-link" disabled={logout.isPending} onClick={() => logout.mutate()}>Sair</button></> : <Link to="/login" search={{ returnTo: location.href }} className="account-link header-login"><LogIn size={15} aria-hidden="true"/>Entrar</Link>}<button className="icon-button mobile-menu-toggle" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(open => !open)}>{menuOpen ? <X size={22}/> : <Menu size={22}/>}</button></div>
-    </div>{menuOpen && <nav id="mobile-navigation" className="mobile-navigation" aria-label="Navegação mobile"><Link to="/" search={homeSearch} onClick={() => setMenuOpen(false)}>Início</Link><Link to="/" search={homeSearch} hash="market" onClick={() => setMenuOpen(false)}>Mercado</Link><span aria-disabled="true">Criadores</span><span aria-disabled="true">Aprenda</span></nav>}</header>
+      <Link to="/cart" className="account-link header-cart" aria-label="Carrinho"><ShoppingCart size={18} aria-hidden="true"/></Link>{session.data?.user ? <><Link to="/account/profile" className="account-link">Meu perfil</Link>{!location.pathname.startsWith('/account/') && <button className="account-link" disabled={logout.isPending} onClick={() => logout.mutate()}>Sair</button>}</> : <Link to="/login" search={{ returnTo: location.href }} className="account-link header-login"><LogIn size={15} aria-hidden="true"/>Entrar</Link>}<button className="icon-button mobile-menu-toggle" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(open => !open)}>{menuOpen ? <X size={22}/> : <Menu size={22}/>}</button></div>
+    </div>{menuOpen && <nav id="mobile-navigation" className="mobile-navigation" aria-label="Navegação mobile"><Link to="/" search={homeSearch} onClick={() => setMenuOpen(false)}>Início</Link><Link to="/" search={homeSearch} hash="market" onClick={() => setMenuOpen(false)}>Mercado</Link><AuxiliaryAction>Criadores</AuxiliaryAction><AuxiliaryAction>Aprenda</AuxiliaryAction></nav>}</header>}
     {logout.isError && <p role="alert" className="market-container field-error">Não foi possível sair. Tente novamente.</p>}<Outlet/>
     {isHome && <nav className="market-mobile-nav" aria-label="Navegação do marketplace">
       <Link to="/" search={homeSearch} aria-label="Início" aria-current="page"><House aria-hidden="true"/></Link>
@@ -38,11 +40,7 @@ export function StorefrontShell() {
         ? <Link to="/account/profile" aria-label="Meu perfil"><UserRound aria-hidden="true"/></Link>
         : <Link to="/login" search={{ returnTo: location.href }} aria-label="Entrar"><UserRound aria-hidden="true"/></Link>}
     </nav>}
-    <footer id="about-kurio" className="market-container storefront-footer">
-      <div className="footer-features"><article><ShieldCheck size={23} aria-hidden="true"/><h2>Segurança da carteira</h2><p>Proteja sua carteira e confirme os detalhes antes de colecionar.</p></article><article><Palette size={23} aria-hidden="true"/><h2>Criadores em destaque</h2><p>Explore as obras e coleções disponíveis no mercado.</p></article><article><Sparkles size={23} aria-hidden="true"/><h2>Alertas de lançamentos</h2><Link to="/" search={homeSearch} hash="market">Explorar <ArrowUpRight size={15} aria-hidden="true"/></Link></article></div>
-      <div className="footer-brand"><Link to="/" search={homeSearch} className="wordmark">KURIO</Link><p>Feito para colecionadores,<br/>criadores e cultura.</p><p className="footer-disclaimer">Marketplace de demonstração.<br/>Compras e carteiras simuladas.</p></div>
-      <div className="footer-directory"><div><h2>Meu perfil</h2><Link to="/account/profile">Meu perfil</Link><Link to="/account/wallets">Carteiras</Link></div><div><h2>Central de ajuda</h2><p>Como comprar NFTs</p><p>Carteira e segurança</p>{import.meta.env.VITE_ENABLE_MOCKS !== 'false' && <Link to="/demo/scenarios">Cenários da demonstração</Link>}</div><div><h2>Coleções</h2><Link to="/" search={homeSearch} hash="market">Arte digital</Link><p>Fotografia</p><p>Música</p></div><div><h2>Redes sociais</h2><p>Acompanhe a KURIO</p><h2>Redes compatíveis</h2><p>Ethereum · Polygon · Solana</p></div></div>
-      <div className="footer-bottom"><span>© 2026 Kurio. Propriedade digital para todos.</span><Link to="/" search={homeSearch} hash="market">Explorar mercado <ArrowUpRight size={13}/></Link></div>
-    </footer>
+    {!location.pathname.startsWith('/account/') && !location.pathname.startsWith('/checkout/orders/') && <StorefrontFooter/>}
+    {import.meta.env.VITE_ENABLE_MOCKS !== 'false' && <Link to="/demo/scenarios" className="demo-launcher" aria-label="Cenários da demonstração">◇</Link>}
   </>
 }

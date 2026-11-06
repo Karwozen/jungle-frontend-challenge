@@ -5,6 +5,7 @@ import { api } from '../../shared/api'
 import type { Nft } from '../../shared/contracts'
 import { sessionQuery } from '../account/session'
 import { favoriteQuery } from './favorites'
+import { AccountSidebar } from '../account/AccountSidebar'
 import { NftCard } from './NftCard'
 
 export function FavoriteCollection() {
@@ -19,8 +20,8 @@ export function FavoriteCollection() {
   })
   const failed = works.filter(work => work.isError)
   return (
-    <main id="content" className="market-container detail-page favorites-page">
-      <h1>Favoritos</h1>
+    <main id="content" className="market-container account-layout favorites-page">
+      <AccountSidebar/><section className="account-content"><h1>Lista de interesse</h1>
       {favorites.isPending || works.some(work => work.isPending) ? <p role="status">Carregando favoritos…</p> : null}
       {favorites.isError && <p role="alert">Falha ao carregar favoritos. <Button onClick={() => void favorites.refetch()}>Tentar novamente</Button></p>}
       {failed.length > 0 && <p role="alert">Algumas obras não carregaram. <Button onClick={() => void Promise.all(failed.map(work => work.refetch()))}>Tentar novamente</Button></p>}
@@ -31,6 +32,6 @@ export function FavoriteCollection() {
       {works.some(work => work.data) && <ul className="nft-grid">
         {works.flatMap(work => work.data ? [<NftCard key={work.data.id} nft={work.data} showFavorite/>] : [])}
       </ul>}
-    </main>
+    </section></main>
   )
 }

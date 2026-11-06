@@ -92,7 +92,7 @@ em `REQUIREMENTS_STATUS.md`.
 
 ## Verificação
 
-Em 05/11/2026, build e lint passaram e a suíte Playwright teve 85 testes aprovados
+Em 05/11/2026, build e lint passaram e a suíte Playwright teve 97 testes aprovados
 e três ignorados por layout. A suíte cobre fluxos, falhas de rede e reconexão.
 Relatórios HTML e traces são gerados em `playwright-report` e `test-results`.
 Oito snapshots visuais foram criados no Chromium para Windows; não representam

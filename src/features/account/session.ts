@@ -3,6 +3,7 @@ import { api, SESSION_TOKEN_KEY } from '../../shared/api'
 import type { Session, AuthResponse } from '../../shared/account'
 import { queryClient } from '../../app/query'
 export async function fetchSession(): Promise<Session> {
+  if (!localStorage.getItem(SESSION_TOKEN_KEY)) return { user: null }
   try { return (await api.get<Session>('/session')).data } catch (error) { if (axios.isAxiosError(error) && error.response?.status === 401) return { user: null }; throw error }
 }
 export const sessionQuery = { queryKey: ['session'] as const, queryFn: fetchSession, retry: false, staleTime: 0 }

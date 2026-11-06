@@ -13,6 +13,7 @@ import { CollectorFields, WalletProviders } from './CollectorFields'
 import type { ResourceEvent } from '../../shared/contracts'
 import { sessionQuery } from '../account/session'
 import { Button } from '../../components/ui/button'
+import { OrderReceipt } from './OrderReceipt'
 import { Artwork } from '../catalog/Artwork'
 import { queryClient } from '../../app/query'
 import { createSocket } from '../../app/realtime'
@@ -99,6 +100,12 @@ function CheckoutForm({ user }: { user: { id: string; name: string; email: strin
   function saveDraft(event: FormEvent<HTMLFormElement>) {
     setReview(null)
     const values = Object.fromEntries(new FormData(event.currentTarget)) as Record<string, string>
+    if (!wallets.data) delete values.network
+    else if (event.target instanceof HTMLInputElement && event.target.name === 'wallet') {
+      const walletId = event.target.value
+      const chosen = wallets.data.find(item => item.id === walletId)
+      if (chosen) values.network = chosen.network
+    }
     setDraft(values)
     localStorage.setItem(draftKey, JSON.stringify(values))
   }
@@ -149,12 +156,6 @@ function CheckoutForm({ user }: { user: { id: string; name: string; email: strin
             ))}
           </fieldset>
           <WalletProviders draft={draft}/>
-          <div className="form-field">
-            <label htmlFor="checkout-network">Rede de pagamento</label>
-            <select id="checkout-network" name="network" defaultValue={network} onChange={() => setConnected('')}>
-              <option>Ethereum</option><option>Polygon</option><option>Solana</option>
-            </select>
-          </div>
           <div className="checkout-connection-actions">
             <Button type="button" variant="outline" onClick={event => {
               const data = new FormData(event.currentTarget.form!)
@@ -207,7 +208,7 @@ function CheckoutForm({ user }: { user: { id: string; name: string; email: strin
                 <input id="collector-email" name="email" type="email" required defaultValue={draft.email ?? user.email}/>
               </div>
             </div>
-            <CollectorFields draft={draft} errors={errors}/>
+            <CollectorFields draft={draft} errors={errors} wallet={selectedWallet} network={network} onNetworkChange={() => setConnected('')}/>
           </section>
           <aside className="checkout-side">
             <section className="checkout-summary" aria-labelledby="checkout-summary-heading">
@@ -271,5 +272,5 @@ export function OrderPage() {
     socket.on('order.updated', (event: ResourceEvent<Order>) => { if (event.resourceId !== orderId || event.data.userId !== userId) return; queryClient.setQueryData<Order>(['private', userId, 'order', orderId], old => old && old.version < event.version && old.status === 'pending' ? event.data : old); void queryClient.invalidateQueries({ queryKey: ['private', userId, 'cart'] }) })
     socket.connect(); return () => { socket.removeAllListeners(); socket.disconnect() }
   }, [userId, orderId])
-  return <main id="content" className="market-container order-page">{order.isPending ? <div className="skeleton h-64" aria-label="Carregando pedido"/> : order.isError ? <div role="alert"><p>{errorMessage(order.error)}</p><Button onClick={() => void order.refetch()}>Tentar novamente</Button></div> : <section className="order-receipt"><h1>{order.data.status === 'confirmed' ? 'Pedido confirmado' : order.data.status === 'declined' ? 'Pagamento recusado' : 'Acompanhamento do pedido'}</h1><p role="status">{order.data.status === 'pending' ? 'Pagamento pendente. Você pode recarregar esta página com segurança.' : order.data.status === 'declined' ? order.data.reason : 'Seus NFTs agora estão na sua carteira simulada.'}</p><dl className="order-identification"><div><dt>Pedido</dt><dd>{order.data.id}</dd></div>{order.data.status === 'confirmed' && <><div><dt>Transação simulada</dt><dd>{order.data.transaction}</dd></div><div><dt>Data</dt><dd>{new Date(order.data.createdAt).toLocaleDateString('pt-BR')}</dd></div><div><dt>Carteira</dt><dd>{order.data.wallet.label} · {order.data.wallet.network}</dd></div></>}</dl>{order.data.status === 'confirmed' && <><h2>Detalhes da transação</h2><ul className="checkout-items">{order.data.cart.items.map(item => <li key={item.id}><div className="checkout-thumbnail"><Artwork nft={item.nft}/></div><div><strong>{item.quantity} × {item.nft.name}</strong><p>Edição: {item.edition?.name || 'Padrão'}</p><p>{item.nft.price} ETH por unidade</p></div></li>)}</ul><dl className="nft-facts">{[['Subtotal',order.data.cart.subtotal],['Desconto',order.data.cart.discount],['Taxa de rede',order.data.cart.networkFee],['Total',order.data.cart.total]].map(([label,value]) => <div key={label}><dt>{label}</dt><dd>{value} ETH</dd></div>)}</dl></>}<Link to="/cart" className="order-return">Voltar ao carrinho</Link></section>}</main>
+  return <main id="content" className="market-container order-page">{order.isPending ? <div className="skeleton h-64" aria-label="Carregando pedido"/> : order.isError ? <div role="alert"><p>{errorMessage(order.error)}</p><Button onClick={() => void order.refetch()}>Tentar novamente</Button></div> : <OrderReceipt order={order.data}/>}</main>
 }

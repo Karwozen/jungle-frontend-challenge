@@ -36,5 +36,5 @@ export function FavoriteButton({ nftId, compact = false }: { nftId: string; comp
     mutation.mutate(!active)
   }
   const message = mutation.isError && axios.isAxiosError(mutation.error) ? mutation.error.response?.data?.message : ''
-  return <div className={compact ? 'favorite-control card-favorite' : 'favorite-control'}><Button type="button" variant="outline" aria-pressed={active} disabled={updating || Boolean(userId && favorites.isPending)} onClick={toggle}><Heart size={17} aria-hidden="true" fill={active ? 'currentColor' : 'none'}/><span className="favorite-label">{active ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}</span></Button>{message && <p role="alert" className="field-error">{message}</p>}</div>
+  return <div className={compact ? 'favorite-control card-favorite' : 'favorite-control'}><Button type="button" variant="outline" aria-label={active ? 'Remover dos favoritos' : 'Adicionar aos favoritos'} aria-pressed={active} disabled={updating || Boolean(userId && favorites.isPending)} onClick={toggle}><Heart size={17} aria-hidden="true" fill={active ? 'currentColor' : 'none'}/><span className="favorite-label">{active ? 'Favoritado' : 'Favoritar'}</span></Button>{message && <p role="alert" className="field-error">{message}</p>}</div>
 }

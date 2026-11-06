@@ -1,5 +1,6 @@
 import { z } from 'zod'
 export const catalogSearch = z.object({
+  category: z.string().optional().catch(undefined),
   q: z.string().max(100).catch(''), collection: z.string().catch(''),
   network: z.enum(['Ethereum', 'Polygon', 'Solana']).optional().catch(undefined),
   minPrice: z.coerce.string().regex(/^\d{1,12}(?:\.\d{1,18})?$/).optional().catch(undefined),

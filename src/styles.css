@@ -2,15 +2,16 @@
 @import "@fontsource/ibm-plex-mono/600.css";
 @import "@fontsource/ibm-plex-mono/700.css";
 @import "tailwindcss";
+@import "./fidelity.css";
 @theme inline {
   --color-background: #140d0a;
   --color-foreground: #f5f1eb;
-  --color-card: #261713;
+  --color-card: #241612;
   --color-primary: #e89b55;
   --color-primary-foreground: #1f1209;
   --color-muted: #35231b;
   --color-muted-foreground: #c3af97;
-  --color-border: #60402c;
+  --color-border: #493126;
   --font-sans: 'IBM Plex Mono', ui-monospace, monospace;
 }
 :root { color-scheme: dark; scroll-padding-top: 24px; }

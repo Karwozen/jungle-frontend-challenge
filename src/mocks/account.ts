@@ -1,4 +1,5 @@
 import { addressIdentity } from '../shared/networks'
+import { z } from 'zod'
 import { http, HttpResponse, delay } from 'msw'
 import { loginSchema, registerSchema, profileSchema, passwordSchema, walletSchema, type User, type Wallet } from '../shared/account'
 const KEY = 'kurio.mock.accounts.v1'
@@ -7,7 +8,7 @@ interface AccountDatabase { users: StoredUser[]; sessions: Record<string, { user
 let initialization: Promise<void> | undefined
 function read(): AccountDatabase { return JSON.parse(localStorage.getItem(KEY)!) as AccountDatabase }
 function write(db: AccountDatabase) { localStorage.setItem(KEY, JSON.stringify(db)) }
-const publicUser = ({ id, name, email, avatar }: StoredUser): User => ({ id, name, email, avatar })
+const publicUser = ({ id, name, email, avatar, username, ens, walletLabel }: StoredUser): User => ({ id, name, email, avatar, username, ens, walletLabel })
 async function digest(password: string, salt: string) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits'])
   const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: new TextEncoder().encode(salt), iterations: 100000, hash: 'SHA-256' }, key, 256)
@@ -45,6 +46,18 @@ function issue(db: AccountDatabase, user: StoredUser) {
   return HttpResponse.json({ user: publicUser(user), token, expiresAt })
 }
 export const accountHandlers = [
+  http.post('/api/auth/social', async ({ request }) => {
+    await initialize(); await delay(250)
+    const input = z.object({ provider: z.enum(['google', 'facebook']) }).safeParse(await request.json())
+    if (!input.success) return fail('Provedor inválido', 422, 'VALIDATION')
+    const id = `demo-${input.data.provider}`, db = read()
+    let user = db.users.find(item => item.id === id)
+    if (!user) {
+      user = { id, name: `Colecionador ${input.data.provider === 'google' ? 'Google' : 'Facebook'}`, email: `${id}@kurio.test`, salt: crypto.randomUUID(), hash: '' }
+      db.users.push(user)
+    }
+    return issue(db, user)
+  }),
   http.post('/api/register', async ({ request }) => {
     await initialize(); await delay(250)
     const input = registerSchema.safeParse(await request.json())
